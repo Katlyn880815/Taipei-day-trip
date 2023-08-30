@@ -63,7 +63,7 @@ def handle_attractions_api_by_id(attractionId):
     response.headers['Content-Type'] = 'application/json; charset=utf-8'
     return response
 
-@app.route('/api/mrt')
+@app.route('/api/mrts')
 def handle_attractions_api_mrt():
     result = get_data.get_attractions_by_mrt()
     response = make_response(json.dumps(result, ensure_ascii=False))
