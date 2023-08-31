@@ -65,7 +65,7 @@ def get_attraction_by_keyword(keyword, page=0):
     con = connection_pool.get_connection()
     cursor = con.cursor(dictionary=True)
     
-    cursor.execute('select count(*) from attractions_details inner join mrt on attractions_details.mrt_id = mrt_list.id where attractions_details.name like %s or mrt_list.mrt like %s', (keyword, keyword,))
+    cursor.execute('select count(*) from attractions_details inner join mrt_list on attractions_details.mrt_id = mrt_list.id where attractions_details.name like %s or mrt_list.mrt like %s', (keyword, keyword,))
     count = cursor.fetchone()['count(*)']
 
     limit = 12
