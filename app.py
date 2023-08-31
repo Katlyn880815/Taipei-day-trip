@@ -41,7 +41,7 @@ def handle_attractions_api():
     response.headers['Content-Type'] = 'application/json; charset=utf-8'
     try:
         error = result_attractions['error']
-        if(result_attractions['message'] == '找不到符合關鍵字的資料' or result_attractions['message'] == '這個關鍵字已經沒有更多資料' or result_attractions['message'] == '頁碼輸入錯誤，請輸入數字'):
+        if(result_attractions['message'] == '找不到符合關鍵字的資料' or result_attractions['message'] == '這個關鍵字已經沒有更多資料' or result_attractions['message'] == '頁碼輸入錯誤，請輸入數字' or result_attractions['message'] == 'No more attractions'):
             response.status_code = 404
         else:
             response.status_code = 500
