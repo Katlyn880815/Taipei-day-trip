@@ -70,16 +70,19 @@ def get_attraction_by_keyword(keyword, page=0):
     con.close()
     limit = 12
     offset = page * limit
-
     if count == 0:
-        
         return {
             'error': True,
-            'message': '找不到該關鍵字'
+            'message': '找不到符合關鍵字的資料'
         }
     else:
         result = load_data('SELECT attractions_details.id, attractions_details.name, attractions_details.category, attractions_details.description, attractions_details.address, attractions_details.transport, attractions_details.lat, attractions_details.lng, mrt_list.mrt FROM attractions_details INNER JOIN mrt_list ON attractions_details.mrt_id = mrt_list.id WHERE attractions_details.name LIKE %s OR mrt_list.mrt LIKE %s ORDER BY attractions_details.id ASC LIMIT %s OFFSET %s', (keyword, keyword, limit, offset,))
         result = handle_attractions_images(result)
+        if(result == []):
+            return {
+                'error': True,
+                'message': '這個關鍵字已經沒有更多資料'
+            }
         return {
             'nextPage': page + 1 if offset + limit < count else None,
             'data': result
@@ -87,15 +90,21 @@ def get_attraction_by_keyword(keyword, page=0):
     
 #GETTING ATTRACTIONS BY ID
 def get_attraction_by_id(id):
-    con = connection_pool.get_connection()
-    cursor = con.cursor(dictionary = True)
-    cursor.execute('SELECT attractions_details.id, attractions_details.name, attractions_details.category, attractions_details.description, attractions_details.address, attractions_details.transport, attractions_details.lat, attractions_details.lng, mrt_list.mrt FROM attractions_details INNER JOIN mrt_list ON attractions_details.mrt_id = mrt_list.id WHERE attractions_details.id = %s', (id,))
-    result = cursor.fetchone()
-    con.close()
+    try:
+        con = connection_pool.get_connection()
+        cursor = con.cursor(dictionary = True)
+        cursor.execute('SELECT attractions_details.id, attractions_details.name, attractions_details.category, attractions_details.description, attractions_details.address, attractions_details.transport, attractions_details.lat, attractions_details.lng, mrt_list.mrt FROM attractions_details INNER JOIN mrt_list ON attractions_details.mrt_id = mrt_list.id WHERE attractions_details.id = %s', (id,))
+        result = cursor.fetchone()
+        con.close()
+    except:
+        return {
+            'error': True,
+            'message': '資料獲取失敗，伺服器出錯'
+        }
     if(result == None):
         return {
             'error': True,
-            'message': '無此編碼'
+            'message': '無此編碼，請重新輸入'
         }
     result = handle_attractions_images(result)
     return{
@@ -121,7 +130,7 @@ def get_attractions_by_mrt():
     except:
         data = {
             'error': True,
-            'message': '資料獲取失敗'
+            'message': '資料獲取失敗，伺服器出錯'
         }
     finally:
         return data

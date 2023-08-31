@@ -36,7 +36,10 @@ def handle_attractions_api():
     response.headers['Content-Type'] = 'application/json; charset=utf-8'
     try:
         error = result_attractions['error']
-        response.status_code = 500
+        if(result_attractions['message'] == '找不到符合關鍵字的資料' or result_attractions['這個關鍵字已經沒有更多資料']):
+            response.status_code = 404
+        else:
+            response.status_code = 500
     except:
         response.status_code = 200
     return response
@@ -57,7 +60,10 @@ def handle_attractions_api_by_id(attractionId):
     response = make_response(json.dumps(result, ensure_ascii=False))
     try:
         error = result['error']
-        response.status_code = 500
+        if(result['message'] == '無此編碼，請重新輸入'):
+             response.status_code = 404
+        else:
+            response.status_code = 500
     except:
         response.status_code = 200
     response.headers['Content-Type'] = 'application/json; charset=utf-8'
