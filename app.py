@@ -25,7 +25,10 @@ def thankyou():
 @app.route('/api/attractions')
 def handle_attractions_api():
     page = request.args.get('page', 0)
-    page = int(page)
+    try:
+        page = int(page)
+    except:
+        result_attractions = get_data.get_attraction_by_keyword(keyword, page)
     keyword = request.args.get('keyword', None)
 
     if keyword is not None:
@@ -36,7 +39,7 @@ def handle_attractions_api():
     response.headers['Content-Type'] = 'application/json; charset=utf-8'
     try:
         error = result_attractions['error']
-        if(result_attractions['message'] == '找不到符合關鍵字的資料' or result_attractions['message'] == '這個關鍵字已經沒有更多資料'):
+        if(result_attractions['message'] == '找不到符合關鍵字的資料' or result_attractions['message'] == '這個關鍵字已經沒有更多資料' or result_attractions['message'] == '頁碼輸入錯誤，請輸入數字'):
             response.status_code = 404
         else:
             response.status_code = 500

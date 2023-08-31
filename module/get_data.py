@@ -62,9 +62,15 @@ def get_attractions(page):
 #GETTING ATTRACTIONS BY KEYWORD
 def get_attraction_by_keyword(keyword, page=0):
     keyword = '%' + keyword + '%'
+    try:
+        page = int(page)
+    except:
+        return{
+             'error': True,
+             'message': '頁碼輸入錯誤，請輸入數字'
+        }
     con = connection_pool.get_connection()
     cursor = con.cursor(dictionary=True)
-    
     cursor.execute('select count(*) from attractions_details inner join mrt_list on attractions_details.mrt_id = mrt_list.id where attractions_details.name like %s or mrt_list.mrt like %s', (keyword, keyword,))
     count = cursor.fetchone()['count(*)']
     con.close()
