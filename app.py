@@ -25,16 +25,18 @@ def thankyou():
 @app.route('/api/attractions')
 def handle_attractions_api():
     page = request.args.get('page', 0)
+    keyword = request.args.get('keyword', None)
     try:
         page = int(page)
+        if keyword is not None:
+            result_attractions = get_data.get_attraction_by_keyword(keyword, page)
+        else:
+            result_attractions = get_data.get_attractions(page)
     except:
-        result_attractions = get_data.get_attraction_by_keyword(keyword, page)
-    keyword = request.args.get('keyword', None)
-
-    if keyword is not None:
-        result_attractions = get_data.get_attraction_by_keyword(keyword, page)
-    else:
-        result_attractions = get_data.get_attractions(page)
+        result_attractions = {
+            'error': True,
+            'message': '頁碼輸入錯誤，請輸入數字'
+        }
     response = make_response(json.dumps(result_attractions, ensure_ascii=False))
     response.headers['Content-Type'] = 'application/json; charset=utf-8'
     try:
@@ -45,7 +47,8 @@ def handle_attractions_api():
             response.status_code = 500
     except:
         response.status_code = 200
-    return response
+    finally:
+        return response
 
 @app.route('/api/attraction/<attractionId>')
 def handle_attractions_api_by_id(attractionId):
