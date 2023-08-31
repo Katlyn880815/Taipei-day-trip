@@ -67,12 +67,12 @@ def get_attraction_by_keyword(keyword, page=0):
     
     cursor.execute('select count(*) from attractions_details inner join mrt_list on attractions_details.mrt_id = mrt_list.id where attractions_details.name like %s or mrt_list.mrt like %s', (keyword, keyword,))
     count = cursor.fetchone()['count(*)']
-
+    con.close()
     limit = 12
     offset = page * limit
 
     if count == 0:
-        con.close()
+        
         return {
             'error': True,
             'message': '找不到該關鍵字'
