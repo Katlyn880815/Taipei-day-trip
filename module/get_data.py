@@ -46,6 +46,9 @@ def get_attractions(page):
     limit = 12
     offset = page * limit
     result = load_data('SELECT attractions_details.id, attractions_details.name, attractions_details.category, attractions_details.description, attractions_details.address, attractions_details.transport, attractions_details.lat, attractions_details.lng, mrt_list.mrt FROM attractions_details INNER JOIN mrt_list ON attractions_details.mrt_id = mrt_list.id ORDER BY attractions_details.id ASC LIMIT %s OFFSET %s', (limit, offset,))
+
+    length_attraction = load_data('select count(*) from attractions_details')
+    length_attraction = length_attraction[0]['count(*)']
     if(result == []):
         return {
             'error': True,
@@ -54,7 +57,7 @@ def get_attractions(page):
     else:
         result = handle_attractions_images(result)
         final_result = {
-            'nextPage': page + 1 if offset + limit < 60 else None,
+            'nextPage': page + 1 if offset + limit < length_attraction else None,
             'data': result
         }
     return final_result
