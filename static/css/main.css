@@ -1,0 +1,206 @@
+/*css reset*/
+/* COLORS */
+/* TYPEPOGRAPHY*/
+* {
+  list-style: none;
+}
+*, *:after, *::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  line-height: 1.33rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  max-width: 120rem;
+  margin: 0 auto;
+}
+
+.heading__primary {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 3.4rem;
+}
+.heading__primary a {
+  color: #448899;
+}
+.heading__secondary {
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 4.1rem;
+}
+.heading__tertiary {
+  font-size: 1.6rem;
+  line-height: 1.33rem;
+  font-weight: 700;
+}
+
+.btn {
+  background-color: #448899;
+  border: none;
+  border-radius: 0 0.5rem 0.5rem 0;
+  cursor: pointer;
+}
+
+/* COLORS */
+/* TYPEPOGRAPHY*/
+.header {
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header.container {
+  padding: 1rem;
+}
+.header__nav__item {
+  color: #666666;
+  padding: 1rem;
+}
+
+.section__hero {
+  background: url("../image/welcome.png");
+  height: 32rem;
+}
+.section__hero__container {
+  transform: translateY(50%);
+  padding: 1rem;
+}
+.section__hero__container .slogan {
+  margin-bottom: 2.5rem;
+  color: #f8f8f8;
+}
+.section__hero__container .slogan__description {
+  font-weight: 700;
+  margin-top: 1.5rem;
+  line-height: 1.33rem;
+}
+.section__hero .form__search-bar {
+  display: flex;
+  height: 4.6rem;
+}
+.section__hero .form__search-bar__input {
+  width: 40rem;
+  padding: 1.5rem;
+  font-size: 1.6rem;
+  line-height: 1.33rem;
+  border: none;
+  outline: none;
+  color: #757575;
+  border-radius: 0.5rem 0 0 0.5rem;
+  box-shadow: 0rem 0.3rem 2rem 0.1rem #abc;
+}
+@media (max-width: 37.5em) {
+  .section__hero .form__search-bar__input {
+    width: 23rem;
+  }
+}
+.section__hero .form__search-bar .btn__search {
+  padding: 0.8rem 1.5rem;
+  box-shadow: 0rem 0.3rem 0.3rem 0.1rem #abc;
+}
+
+.section__attractions {
+  margin: 4rem auto;
+  display: flex;
+  flex-direction: column;
+}
+.section__attractions .list-mrt-bar {
+  display: flex;
+  justify-content: space-between;
+  color: #666666;
+  margin: 0 0 2rem 0;
+  padding: 0 1.5rem;
+}
+.section__attractions .list-mrt-bar__list {
+  padding: 1.3rem 1rem;
+}
+.section__attractions .list-mrt-bar__list__item__link {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  color: #666666;
+  font-weight: 500;
+  line-height: 1.33rem;
+}
+.section__attractions .list-mrt-bar .btn {
+  background-color: transparent;
+}
+.section__attractions .list-attractions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3rem;
+  padding: 1.5rem;
+}
+@media (max-width: 75em) {
+  .section__attractions .list-attractions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 37.5em) {
+  .section__attractions .list-attractions {
+    grid-template-columns: 1fr;
+  }
+}
+.section__attractions .list-attractions .attractions__item {
+  border: 0.1rem solid #e8e8e8;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  width: 27rem;
+}
+@media (max-width: 37.5em) {
+  .section__attractions .list-attractions .attractions__item {
+    width: 100%;
+  }
+}
+.section__attractions .list-attractions .attractions__item__top-box {
+  color: #fff;
+  position: relative;
+}
+.section__attractions .list-attractions .attractions__item__top-box__img {
+  width: 100%;
+  height: 19.7rem;
+  object-fit: cover;
+  vertical-align: middle;
+}
+.section__attractions .list-attractions .attractions__item__top-box__heading {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.section__attractions .list-attractions .attractions__item__bottom-box {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  color: #757575;
+  font-weight: 500;
+}
+
+.footer {
+  background-color: #666666;
+  text-align: center;
+}
+.footer .copyright {
+  color: #fff;
+  font-weight: 700;
+  padding: 4rem 0;
+}
+
+/* COLORS */
+/* TYPEPOGRAPHY*/
+
+/*# sourceMappingURL=main.css.map */

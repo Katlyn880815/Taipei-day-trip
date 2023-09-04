@@ -1,0 +1,22 @@
+/*css reset*/
+* {
+  list-style: none;
+}
+*, *:after, *::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  max-width: 120rem;
+  margin: 0 auto;
+}/*# sourceMappingURL=base.css.map */

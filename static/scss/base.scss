@@ -1,0 +1,63 @@
+/*css reset*/
+@import "variables.scss";
+
+* {
+  list-style: none;
+  &,
+  &:after,
+  &::before {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  line-height: $line-height-sm;
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  max-width: 120rem;
+  margin: 0 auto;
+}
+
+.heading {
+  &__primary {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: $line-height-lg;
+
+    a {
+      color: $color-primay;
+    }
+  }
+
+  &__secondary {
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 4.1rem;
+    // height: 4.1rem;
+  }
+
+  &__tertiary {
+    font-size: 1.6rem;
+    line-height: $line-height-sm;
+    font-weight: 700;
+  }
+}
+
+.btn {
+  background-color: $color-primay;
+  border: none;
+  border-radius: 0 0.5rem 0.5rem 0;
+  cursor: pointer;
+}
