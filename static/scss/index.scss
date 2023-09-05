@@ -93,6 +93,11 @@
           line-height: $line-height-sm;
           white-space: nowrap;
           cursor: pointer;
+          transition: all 0.3s;
+
+          &:hover {
+            color: #000;
+          }
         }
       }
     }
@@ -121,6 +126,11 @@
       border-radius: 0.5rem;
       overflow: hidden;
       width: 27rem;
+      cursor: pointer;
+
+      &:hover .attractions__item__top-box__img {
+        transform: scale(1.1);
+      }
 
       @include respond(phone) {
         width: 100%;
@@ -129,11 +139,14 @@
       &__top-box {
         color: $color-pure-white;
         position: relative;
+        overflow: hidden;
+
         &__img {
           width: 100%;
           height: 19.7rem;
           object-fit: cover;
           vertical-align: middle;
+          transition: all 0.3s;
         }
 
         &__heading {
