@@ -1,15 +1,28 @@
 /*css reset*/
+/* COLORS */
+/* TYPEPOGRAPHY*/
 * {
   list-style: none;
 }
 *, *:after, *::before {
   padding: 0;
   margin: 0;
-  box-sizing: inherit;
+  box-sizing: border-box;
+}
+* ::-webkit-scrollbar {
+  display: none;
 }
 
 html {
   font-size: 62.5%;
+  font-family: Noto Sans TC, sans-serif;
+  height: 100vh;
+}
+
+body {
+  font-size: 1.6rem;
+  line-height: 1.33rem;
+  height: 100vh;
 }
 
 a {
@@ -19,4 +32,30 @@ a {
 .container {
   max-width: 120rem;
   margin: 0 auto;
+}
+
+.heading__primary {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 3.4rem;
+}
+.heading__primary a {
+  color: #448899;
+}
+.heading__secondary {
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 4.1rem;
+}
+.heading__tertiary {
+  font-size: 1.6rem;
+  line-height: 1.33rem;
+  font-weight: 700;
+}
+
+.btn {
+  background-color: #448899;
+  border: none;
+  border-radius: 0 0.5rem 0.5rem 0;
+  cursor: pointer;
 }/*# sourceMappingURL=base.css.map */

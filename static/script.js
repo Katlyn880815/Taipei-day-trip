@@ -12,12 +12,14 @@ function init() {
     });
 }
 
-document.addEventListener("scroll", throttle(scroll));
+document.addEventListener("scroll", throttle(handleScroll));
 
 const listMrtContainer = document.querySelector(".list-mrt-bar__list");
 const leftBtn = document.querySelector(".btn__left");
 const rightBtn = document.querySelector(".btn__right");
 const listAttractionsContainer = document.querySelector(".list-attractions");
+const searchBar = document.querySelector("#search-bar");
+const searchBtn = document.querySelector(".btn__search");
 
 let nextPage;
 let keywordOuter;
@@ -47,25 +49,15 @@ getData("/mrts")
     let mrts = document.querySelectorAll(".list-mrt-bar__list__item__link");
     mrts.forEach((mrt) => {
       mrt.addEventListener("click", function () {
-        console.log(mrt.text);
+        searchBar.value = mrt.text;
         //initailize
         nextPage = null;
         keywordOuter = null;
         listAttractionsContainer.innerHTML = "";
         document.removeEventListener("scroll", throttle(scroll));
+        let path = `/attractions?page=0&keyword=${mrt.text}`;
         //fetch data
-        getData(`/attractions?page=0&keyword=${mrt.text}`)
-          .then((res) => {
-            return res.json();
-          })
-          .then((result) => {
-            renderAttractionList(result.data, mrt.text);
-            if (result.nextPage !== null) {
-              keywordOuter = keyword;
-              nextPage = result.nextPage;
-              document.addEventListener("scroll", throttle(scroll));
-            }
-          });
+        fetchByKeyword(path, mrt.text);
       });
     });
   });
@@ -85,10 +77,6 @@ function putIntoMrtList(mrt) {
 }
 
 //Attraction List
-//拿到第一筆資料之後，把nextPage指派給全域變數
-//1.註冊事件監聽scroll
-//2.只要一滑動頁面到底部，就會再去拿第n筆資料，根據全域變數的nextPage去拿
-//3.如果nextPage = none就代表沒資料了，把事件監聽取消？
 
 function putIntoAttractionList(attractionName, mrt, category, imgUrl) {
   let attraction = `<li class="attractions__item">
@@ -123,21 +111,22 @@ function renderAttractionList(data) {
 }
 
 //節流
-function throttle(callback, time = 1000) {
-  let timer;
+function throttle(callback, time = 500) {
+  let timer = null;
   return function () {
-    if (timer) {
-      return;
+    if (timer !== null) {
+      clearTimeout(timer);
     }
 
     timer = setTimeout(() => {
-      callback();
+      callback.call();
       timer = null;
     }, time);
   };
 }
 
-function scroll() {
+//scroll eventListener callback func
+function handleScroll() {
   let clientHeight =
     document.documentElement.clientHeight || document.body.clientHeight;
   let scrollTop = document.documentElement.scrollTop;
@@ -147,10 +136,11 @@ function scroll() {
     console.log("bottom");
     if (nextPage == null) {
       console.log("資料載入完畢");
+      return;
     } else if (keywordOuter !== null && keywordOuter !== undefined) {
       console.log(nextPage);
       handleNextPage(nextPage, keywordOuter);
-    } else {
+    } else if (nextPage !== null) {
       handleNextPage(nextPage);
     }
   }
@@ -168,41 +158,50 @@ function handleNextPage(page, keyword = "") {
       return res.json();
     })
     .then((result) => {
+      if (nextPage !== null) {
+        renderAttractionList(result.data);
+      }
       nextPage = result.nextPage;
-      renderAttractionList(result.data);
+      console.log(nextPage);
+      console.log(result);
     });
 }
 
 //Searching function
-
-const searchBar = document.querySelector("#search-bar");
-const searchBtn = document.querySelector(".btn__search");
 
 searchBtn.addEventListener("click", function (e) {
   e.preventDefault();
   //initialize
   keywordOuter = null;
   nextPage = null;
-  document.removeEventListener("scroll", throttle(scroll));
+  document.removeEventListener("scroll", throttle(handleScroll));
   listAttractionsContainer.innerHTML = "";
 
   //start to fetch data
   let keyword = searchBar.value;
   let path = `/attractions?page=0&keyword=${keyword}`;
+  fetchByKeyword(path, keyword);
+});
+
+function fetchByKeyword(path, keyword) {
   getData(path)
     .then((res) => {
       return res.json();
     })
     .then((result) => {
-      console.log(result.data);
+      if (result.data == undefined) {
+        listAttractionsContainer.innerHTML = result.message;
+        return;
+      }
       renderAttractionList(result.data);
       if (result.nextPage !== null) {
         keywordOuter = keyword;
         nextPage = result.nextPage;
-        document.addEventListener("scroll", throttle(scroll));
+        console.log(result.nextPage);
+        document.addEventListener("scroll", throttle(handleScroll));
       }
     });
-});
+}
 
 //Get data func
 function getData(path) {
