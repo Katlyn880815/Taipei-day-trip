@@ -130,7 +130,7 @@ a {
 .section__attractions .list-mrt-bar__list {
   padding: 1.3rem 1rem;
   display: flex;
-  overflow: scroll;
+  overflow: hidden;
 }
 .section__attractions .list-mrt-bar__list__item__link {
   display: block;

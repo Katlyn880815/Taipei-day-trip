@@ -131,6 +131,7 @@ a {
   padding: 1.3rem 1rem;
   display: flex;
   overflow: scroll;
+  scroll-behavior: smooth;
 }
 .section__attractions .list-mrt-bar__list__item__link {
   display: block;
@@ -210,4 +211,4 @@ a {
 /* COLORS */
 /* TYPEPOGRAPHY*/
 
-/*# sourceMappingURL=main.css.map */
+/*# sourceMappingURL=css.map */
