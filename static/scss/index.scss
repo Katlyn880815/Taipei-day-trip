@@ -1,0 +1,194 @@
+@import "variables.scss";
+@import "mixin.scss";
+
+.header {
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &.container {
+    padding: 1rem;
+  }
+
+  &__nav {
+    &__item {
+      color: $color-dark-grey;
+      padding: 1rem;
+      &:hover {
+        color: #000;
+      }
+    }
+  }
+}
+
+.section__hero {
+  background: url("../image/welcome.png");
+  height: 32rem;
+
+  &__container {
+    transform: translateY(50%);
+    padding: 1rem;
+
+    .slogan {
+      margin-bottom: 2.5rem;
+      color: $color-white;
+
+      &__description {
+        font-weight: 700;
+        margin-top: 1.5rem;
+        line-height: $line-height-sm;
+      }
+    }
+  }
+
+  .form__search-bar {
+    display: flex;
+    height: 4.6rem;
+
+    &__input {
+      width: 40rem;
+      padding: 1.5rem;
+      font-size: 1.6rem;
+      line-height: $line-height-sm;
+      border: none;
+      outline: none;
+      color: $color-light-grey;
+      border-radius: 0.5rem 0 0 0.5rem;
+      box-shadow: 0rem 0.3rem 2rem 0.1rem #abc;
+
+      @include respond(phone) {
+        width: 23rem;
+      }
+    }
+
+    .btn__search {
+      padding: 0.8rem 1.5rem;
+      box-shadow: 0rem 0.3rem 0.3rem 0.1rem #abc;
+    }
+  }
+}
+
+.section__attractions {
+  margin: 4rem auto;
+  display: flex;
+  flex-direction: column;
+
+  .list-mrt-bar {
+    display: flex;
+    justify-content: space-between;
+    color: $color-dark-grey;
+    margin: 0 0 2rem 0;
+    padding: 0 1.5rem;
+    overflow: hidden;
+
+    &__list {
+      padding: 1.3rem 1rem;
+      display: flex;
+      overflow: scroll;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      width: 100vw;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      &__item {
+        &__link {
+          display: block;
+          padding: 0.5rem 1.5rem;
+          color: $color-dark-grey;
+          font-weight: 500;
+          line-height: $line-height-sm;
+          white-space: nowrap;
+          cursor: pointer;
+          transition: all 0.3s;
+
+          &:hover {
+            color: #000;
+          }
+        }
+      }
+    }
+
+    .btn {
+      background-color: transparent;
+    }
+  }
+
+  .list-attractions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+    padding: 1.5rem;
+    min-height: 50rem;
+
+    @include respond(tab-land) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include respond(tab-port) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond(phone) {
+      grid-template-columns: 1fr;
+    }
+
+    .attractions__item {
+      border: 0.1rem solid $color-border-grey;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      width: 100%;
+      max-height: 23.8rem;
+      cursor: pointer;
+
+      &:hover .attractions__item__top-box__img {
+        transform: scale(1.1);
+      }
+
+      &__top-box {
+        color: $color-pure-white;
+        position: relative;
+        overflow: hidden;
+
+        &__img {
+          width: 100%;
+          height: 19.7rem;
+          object-fit: cover;
+          vertical-align: middle;
+          transition: all 0.3s;
+        }
+
+        &__heading {
+          background-color: rgba(0, 0, 0, 0.6);
+          padding: 1rem;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          line-height: 1.5rem;
+        }
+      }
+
+      &__bottom-box {
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        color: $color-light-grey;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.footer {
+  background-color: $color-dark-grey;
+  text-align: center;
+  .copyright {
+    color: $color-pure-white;
+    font-weight: 700;
+    padding: 4rem 0;
+  }
+}

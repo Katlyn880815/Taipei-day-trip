@@ -1,0 +1,10 @@
+{
+  "name": "Taipei-day-trip",
+  "version": "1.0.0",
+  "scripts": {
+    "compile-scss": "node-sass static/scss/main.scss static/css/main.css"
+  },
+  "devDependencies": {
+    "node-sass": "^6.0.0"
+  }
+}

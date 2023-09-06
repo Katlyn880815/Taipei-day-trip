@@ -139,3 +139,7 @@ cython_debug/
 
 # DS_Store
 .DS_Store
+
+
+#Node_modules
+node_modules/
