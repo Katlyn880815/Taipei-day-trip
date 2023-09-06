@@ -159,18 +159,6 @@ async function handleNextPage(page, keyword = "") {
   }
   nextPage = nextPageData.nextPage;
   console.log(nextPageData);
-  // getData(path)
-  //   .then((res) => {
-  //     return res.json();
-  //   })
-  //   .then((result) => {
-  //     if (nextPage !== null) {
-  //       renderAttractionList(result.data);
-  //     }
-  //     nextPage = result.nextPage;
-  //     console.log(nextPage);
-  //     console.log(result);
-  //   });
 }
 
 //Searching function
@@ -203,40 +191,7 @@ async function fetchByKeyword(path, keyword) {
       document.addEventListener("scroll", throttle(handleScroll));
     }
   }
-  // getData(path)
-  //   .then((res) => {
-  //     return res.json();
-  //   })
-  //   .then((result) => {
-  //     if (result.data == undefined) {
-
-  //     }
-  //     renderAttractionList(result.data);
-  //     if (result.nextPage !== null) {
-  //       keywordOuter = keyword;
-  //       nextPage = result.nextPage;
-  //       console.log(result.nextPage);
-  //       document.addEventListener("scroll", throttle(handleScroll));
-  //     }
-  //   });
 }
-
-/*
-//Get data func
-function getData(path) {
-  let prefixHttp = "http://35.162.233.114:3000/api";
-  return new Promise(function (resolve, reject) {
-    fetch(prefixHttp + path)
-      .then((res) => {
-        resolve(res);
-      })
-      .then((error) => {
-        isLoading = false;
-        reject(error);
-      });
-  });
-}
-*/
 
 async function getData(path) {
   let prefixHttp = "http://35.162.233.114:3000/api";
