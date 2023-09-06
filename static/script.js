@@ -76,26 +76,39 @@ function putIntoMrtList(mrt) {
   listMrtContainer.appendChild(liEl);
 }
 
-//Attraction List
-
 function putIntoAttractionList(attractionName, mrt, category, imgUrl) {
-  let attraction = `<li class="attractions__item">
-  <div class="attractions__item__top-box">
-    <img
-      src=${imgUrl}
-      alt=景點圖片-${attractionName}
-      class="attractions__item__top-box__img"
-    />
-    <h3 class="heading__tertiary attractions__item__top-box__heading">
-      ${attractionName}
-    </h3>
-  </div>
-  <div class="attractions__item__bottom-box">
-    <span>${mrt}</span>
-    <span>${category}</span>
-  </div>
-</li>`;
-  return attraction;
+  let liElement = document.createElement("li");
+  liElement.className = "attractions__item";
+
+  let topBox = document.createElement("div");
+  topBox.className = "attractions__item__top-box";
+
+  let imgElement = document.createElement("img");
+  imgElement.src = imgUrl;
+  imgElement.alt = `景點圖片-${attractionName}`;
+  imgElement.className = "attractions__item__top-box__img";
+
+  let h3Element = document.createElement("h3");
+  h3Element.textContent = attractionName;
+  h3Element.className = "heading__tertiary attractions__item__top-box__heading";
+
+  let bottomBox = document.createElement("div");
+  bottomBox.className = "attractions__item__bottom-box";
+
+  let spanMrt = document.createElement("span");
+  spanMrt.textContent = mrt;
+
+  let spanCategory = document.createElement("span");
+  spanCategory.textContent = category;
+
+  topBox.appendChild(imgElement);
+  topBox.appendChild(h3Element);
+  bottomBox.appendChild(spanMrt);
+  bottomBox.appendChild(spanCategory);
+  liElement.appendChild(topBox);
+  liElement.appendChild(bottomBox);
+
+  return liElement;
 }
 
 function renderAttractionList(data) {
@@ -106,7 +119,7 @@ function renderAttractionList(data) {
       site.category,
       site.images[0]
     );
-    listAttractionsContainer.innerHTML += attractionHtml;
+    listAttractionsContainer.appendChild(attractionHtml);
   });
 }
 
