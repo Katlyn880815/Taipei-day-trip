@@ -16,16 +16,15 @@
 html {
   font-size: 62.5%;
   font-family: Noto Sans TC, sans-serif;
-  height: 100vh;
   overflow: -moz-hidden-unscrollable;
 }
 
 body {
   font-size: 1.6rem;
   line-height: 1.33rem;
-  height: 100vh;
   -ms-overflow-style: none;
   overflow: auto;
+  height: 100vh;
 }
 body::-webkit-scrollbar {
   display: none;

@@ -1,19 +1,3 @@
-//First time to load page
-window.onload = init();
-
-function init() {
-  getData("/attractions")
-    .then((res) => {
-      return res.json();
-    })
-    .then((result) => {
-      renderAttractionList(result.data, "init");
-      nextPage = result.nextPage;
-    });
-}
-
-document.addEventListener("scroll", throttle(handleScroll));
-
 const listMrtContainer = document.querySelector(".list-mrt-bar__list");
 const leftBtn = document.querySelector(".btn__left");
 const rightBtn = document.querySelector(".btn__right");
@@ -21,8 +5,49 @@ const listAttractionsContainer = document.querySelector(".list-attractions");
 const searchBar = document.querySelector("#search-bar");
 const searchBtn = document.querySelector(".btn__search");
 
+let isLoading = false;
 let nextPage;
 let keywordOuter;
+
+//First time to load page
+window.onload = init();
+
+async function init() {
+  const attractionInitData = await getData("/attractions");
+  const mrtsInitData = await getData("/mrts");
+  Promise.all([attractionInitData, mrtsInitData]).then(
+    ([attractions, mrts]) => {
+      renderAttractionList(attractions.data);
+      nextPage = attractions.nextPage;
+      mrts.data.forEach((mrt) => putIntoMrtList(mrt));
+      scrollBar([leftBtn, rightBtn]);
+      let mrtItems = document.querySelectorAll(
+        ".list-mrt-bar__list__item__link"
+      );
+      mrtItems.forEach((mrt) => {
+        mrt.addEventListener("click", function () {
+          searchBar.value = mrt.text;
+          //initailize
+          nextPage = null;
+          keywordOuter = null;
+          listAttractionsContainer.innerHTML = "";
+          document.removeEventListener("scroll", throttle(scroll));
+          let path = `/attractions?page=0&keyword=${mrt.text}`;
+          //fetch data
+          fetchByKeyword(path, mrt.text);
+        });
+      });
+    }
+  );
+}
+
+//Fix firefox event listener issue
+let isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+
+document.addEventListener(
+  isFirefox ? "DOMMouseScroll" : "scroll",
+  throttle(handleScroll)
+);
 
 //scorllBar
 function scrollBar(btns) {
@@ -36,31 +61,6 @@ function scrollBar(btns) {
     });
   });
 }
-
-//Fetch data - mrts
-getData("/mrts")
-  .then((res) => {
-    return res.json();
-  })
-  .then((data) => {
-    let list = data.data;
-    list.forEach((mrt) => putIntoMrtList(mrt));
-    scrollBar([leftBtn, rightBtn]);
-    let mrts = document.querySelectorAll(".list-mrt-bar__list__item__link");
-    mrts.forEach((mrt) => {
-      mrt.addEventListener("click", function () {
-        searchBar.value = mrt.text;
-        //initailize
-        nextPage = null;
-        keywordOuter = null;
-        listAttractionsContainer.innerHTML = "";
-        document.removeEventListener("scroll", throttle(scroll));
-        let path = `/attractions?page=0&keyword=${mrt.text}`;
-        //fetch data
-        fetchByKeyword(path, mrt.text);
-      });
-    });
-  });
 
 //put data into list and render
 function putIntoMrtList(mrt) {
@@ -146,25 +146,31 @@ function handleScroll() {
   }
 }
 
-function handleNextPage(page, keyword = "") {
+async function handleNextPage(page, keyword = "") {
   let path = "";
   if (keyword !== "") {
     path = `/attractions?page=${page}&keyword=${keyword}`;
   } else {
     path = `/attractions?page=${page}`;
   }
-  getData(path)
-    .then((res) => {
-      return res.json();
-    })
-    .then((result) => {
-      if (nextPage !== null) {
-        renderAttractionList(result.data);
-      }
-      nextPage = result.nextPage;
-      console.log(nextPage);
-      console.log(result);
-    });
+  const nextPageData = await getData(path);
+  if (nextPage !== null) {
+    renderAttractionList(nextPageData.data);
+  }
+  nextPage = nextPageData.nextPage;
+  console.log(nextPageData);
+  // getData(path)
+  //   .then((res) => {
+  //     return res.json();
+  //   })
+  //   .then((result) => {
+  //     if (nextPage !== null) {
+  //       renderAttractionList(result.data);
+  //     }
+  //     nextPage = result.nextPage;
+  //     console.log(nextPage);
+  //     console.log(result);
+  //   });
 }
 
 //Searching function
@@ -179,36 +185,72 @@ searchBtn.addEventListener("click", function (e) {
 
   //start to fetch data
   let keyword = searchBar.value;
+  console.log(keyword);
   let path = `/attractions?page=0&keyword=${keyword}`;
   fetchByKeyword(path, keyword);
 });
 
-function fetchByKeyword(path, keyword) {
-  getData(path)
-    .then((res) => {
-      return res.json();
-    })
-    .then((result) => {
-      if (result.data == undefined) {
-        listAttractionsContainer.innerHTML = result.message;
-        return;
-      }
-      renderAttractionList(result.data);
-      if (result.nextPage !== null) {
-        keywordOuter = keyword;
-        nextPage = result.nextPage;
-        console.log(result.nextPage);
-        document.addEventListener("scroll", throttle(handleScroll));
-      }
-    });
+async function fetchByKeyword(path, keyword) {
+  const dataKeyword = await getData(path);
+  if (dataKeyword.data === undefined) {
+    listAttractionsContainer.innerHTML = result.message;
+    return;
+  } else {
+    renderAttractionList(dataKeyword.data);
+    if (dataKeyword.nextPage !== null) {
+      keywordOuter = keyword;
+      nextPage = dataKeyword.nextPage;
+      document.addEventListener("scroll", throttle(handleScroll));
+    }
+  }
+  // getData(path)
+  //   .then((res) => {
+  //     return res.json();
+  //   })
+  //   .then((result) => {
+  //     if (result.data == undefined) {
+
+  //     }
+  //     renderAttractionList(result.data);
+  //     if (result.nextPage !== null) {
+  //       keywordOuter = keyword;
+  //       nextPage = result.nextPage;
+  //       console.log(result.nextPage);
+  //       document.addEventListener("scroll", throttle(handleScroll));
+  //     }
+  //   });
 }
 
+/*
 //Get data func
 function getData(path) {
   let prefixHttp = "http://35.162.233.114:3000/api";
   return new Promise(function (resolve, reject) {
     fetch(prefixHttp + path)
-      .then((res) => resolve(res))
-      .then((error) => reject(error));
+      .then((res) => {
+        resolve(res);
+      })
+      .then((error) => {
+        isLoading = false;
+        reject(error);
+      });
   });
+}
+*/
+
+async function getData(path) {
+  let prefixHttp = "http://35.162.233.114:3000/api";
+  console.log(isLoading);
+  if (isLoading === false) {
+    isLoading = true;
+    try {
+      const response = await fetch(prefixHttp + path);
+      const jsonData = await response.json();
+      isLoading = false;
+      return jsonData;
+    } catch {
+      console.log("Loading fail");
+      throw error;
+    }
+  }
 }
