@@ -121,7 +121,7 @@ def get_attractions_by_mrt():
             count = load_data('select count(*) from attractions_details where mrt_id = %s', (mrt['id'],))
             count = count[0]['count(*)']
             mrt['count'] = count
-        result_mrts = sorted(result_mrts, key = lambda x: x['count'], reverse= False)
+        result_mrts = sorted(result_mrts, key = lambda x: x['count'], reverse = True)
         data = {
             'data': []
         }
