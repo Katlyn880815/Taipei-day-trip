@@ -1,0 +1,248 @@
+@import "variables.scss";
+@import "mixin.scss";
+
+main {
+  border-top: 0.1rem solid $color-border-grey;
+}
+
+.section__attraction-details {
+  padding: 4rem 1.5rem 4rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  border-bottom: 0.1rem solid $color-border-grey;
+
+  position: relative;
+
+  @include respond(tab-land) {
+    gap: 2rem;
+    border-bottom: none;
+    position: relative;
+    &::before {
+      content: "";
+      position: absolute;
+      width: calc(100% - 2rem);
+      bottom: 0;
+      left: 1rem;
+      border-bottom: 0.1rem solid $color-border-grey;
+    }
+  }
+
+  @include respond(tab-port) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 35rem 1fr;
+    padding: 0;
+  }
+
+  .attraction-img-box {
+    position: relative;
+    border-radius: 0.5rem;
+    overflow: hidden;
+
+    @include respond(tab-port) {
+      border-radius: 0;
+    }
+
+    .btn__carousel {
+      &__prev,
+      &__next {
+        width: 3.6rem;
+        height: 3.6rem;
+        position: absolute;
+        top: 50%;
+        z-index: 2;
+        padding: 0;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.65);
+
+        & > img {
+          opacity: 0.75;
+          transition: all 0.2s;
+        }
+
+        &:hover > img {
+          opacity: 1;
+        }
+      }
+
+      &__prev {
+        left: 1rem;
+      }
+
+      &__next {
+        right: 1rem;
+      }
+    }
+
+    &__img-list {
+      &__slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: 200ms opacity ease-in-out;
+        transition-delay: 200ms;
+
+        &[data-active] {
+          opacity: 1;
+          z-index: 1;
+          transition-delay: 0;
+        }
+        &__img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+    }
+
+    .indicator-bar {
+      position: absolute;
+      bottom: 1.3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1.2rem;
+
+      z-index: 1000;
+      &__indicator {
+        display: inline-block;
+        width: 1.2rem;
+        height: 1.2rem;
+        background-color: rgba(255, 255, 255, 0.65);
+        border-radius: 50%;
+        position: relative;
+
+        &::after {
+          content: "";
+          width: 0.9rem;
+          height: 0.9rem;
+          border-radius: 50%;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+
+        &[data-indicator]::after {
+          background-color: #000;
+          z-index: 1;
+        }
+      }
+    }
+  }
+
+  .attraction-booking-box {
+    color: $color-dark-grey;
+    letter-spacing: 0.2rem;
+
+    @include respond(tab-port) {
+      padding: 0 1rem 4rem 1rem;
+    }
+
+    &__txt {
+      margin-bottom: 2rem;
+
+      .heading__forth {
+        margin-bottom: 1.5rem;
+      }
+
+      &__description {
+        line-height: 2.2rem;
+      }
+    }
+
+    &__form-booking {
+      background-color: $color-border-grey;
+      padding: 1.5rem 2rem;
+      border-radius: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.4rem;
+      padding-bottom: 2.6rem;
+      line-height: 2.2rem;
+
+      .input {
+        &__date {
+          padding: 0.5rem 1rem;
+          font-weight: 500;
+          font-size: 1.6rem;
+          font-family: Noto Sans TC, sans-serif;
+          border: none;
+          border-radius: 0.2rem;
+          cursor: pointer;
+
+          &::-webkit-calendar-picker-indicator {
+            opacity: 1;
+            display: block;
+            background: url(../image/icon_calendar.png) no-repeat;
+            width: 2.4rem;
+            height: 2.4rem;
+            border-width: thin;
+          }
+
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+
+      &__description {
+        line-height: $line-height-md;
+        font-weight: 500;
+
+        @include respond(phone) {
+          font-weight: 400;
+        }
+      }
+
+      &__select-time {
+        display: flex;
+        align-items: center;
+        gap: 0.2rem;
+
+        .btn__radio {
+          -webkit-appearance: none;
+          width: 2rem;
+          height: 2rem;
+          background-color: $color-pure-white;
+          border-radius: 50%;
+          border: 0.2rem solid $color-pure-white;
+
+          &:checked {
+            background-color: $color-primay;
+          }
+        }
+      }
+      .btn__ctn {
+        color: $color-pure-white;
+        font-size: 1.9rem;
+        align-self: flex-start;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        transition: all 0.3s;
+
+        &:hover {
+          background-color: $color-primary-darker;
+        }
+      }
+    }
+  }
+}
+
+.section__attraction-description {
+  padding: 5rem 1rem;
+  color: $color-dark-grey;
+  font-weight: 400;
+  line-height: $line-height-md;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .attraction-description-box {
+    .heading__forth {
+      line-height: 2;
+    }
+  }
+}

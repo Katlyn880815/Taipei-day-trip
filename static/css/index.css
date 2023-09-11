@@ -70,12 +70,18 @@
   color: #666666;
   margin: 0 0 2rem 0;
   padding: 0 1.5rem;
+  overflow: hidden;
 }
 .section__attractions .list-mrt-bar__list {
   padding: 1.3rem 1rem;
   display: flex;
   overflow: scroll;
   scroll-behavior: smooth;
+  scrollbar-width: none;
+  width: 100vw;
+}
+.section__attractions .list-mrt-bar__list::-webkit-scrollbar {
+  display: none;
 }
 .section__attractions .list-mrt-bar__list__item__link {
   display: block;
@@ -120,7 +126,7 @@
   border-radius: 0.5rem;
   overflow: hidden;
   width: 100%;
-  max-height: none;
+  max-height: 23.8rem;
   cursor: pointer;
 }
 .section__attractions .list-attractions .attractions__item:hover .attractions__item__top-box__img {
@@ -147,6 +153,9 @@
   left: 0;
   width: 100%;
   line-height: 1.5rem;
+}
+.section__attractions .list-attractions .attractions__item__top-box__heading__link {
+  color: #fff;
 }
 .section__attractions .list-attractions .attractions__item__bottom-box {
   padding: 1rem;

@@ -1,0 +1,163 @@
+/* COLORS */
+/* TYPEPOGRAPHY*/
+main {
+  border-top: 0.1rem solid #e8e8e8;
+}
+
+.section__attraction-details {
+  padding: 4rem 1.5rem 4rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  border-bottom: 0.1rem solid #e8e8e8;
+}
+@media (max-width: 75em) {
+  .section__attraction-details {
+    gap: 2rem;
+    border-bottom: none;
+    position: relative;
+  }
+  .section__attraction-details::before {
+    content: "";
+    position: absolute;
+    width: calc(100% - 2rem);
+    bottom: 0;
+    left: 1rem;
+    border-bottom: 0.1rem solid #e8e8e8;
+  }
+}
+@media (max-width: 56.25em) {
+  .section__attraction-details {
+    grid-template-columns: 1fr;
+    grid-template-rows: 35rem 1fr;
+    padding: 0;
+  }
+}
+.section__attraction-details .attraction-img-box {
+  position: relative;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+@media (max-width: 56.25em) {
+  .section__attraction-details .attraction-img-box {
+    border-radius: 0;
+  }
+}
+.section__attraction-details .attraction-img-box .btn__carousel__prev, .section__attraction-details .attraction-img-box .btn__carousel__next {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+.section__attraction-details .attraction-img-box .btn__carousel__prev:hover, .section__attraction-details .attraction-img-box .btn__carousel__next:hover {
+  color: #000;
+}
+.section__attraction-details .attraction-img-box .btn__carousel__prev {
+  left: 1rem;
+}
+.section__attraction-details .attraction-img-box .btn__carousel__next {
+  right: 1rem;
+}
+.section__attraction-details .attraction-img-box__img-list__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: 200ms opacity ease-in-out;
+  transition-delay: 200ms;
+}
+.section__attraction-details .attraction-img-box__img-list__slide[data-active] {
+  opacity: 1;
+  z-index: 1;
+  transition-delay: 0;
+}
+.section__attraction-details .attraction-img-box__img-list__slide__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+.section__attraction-details .attraction-booking-box {
+  color: #666666;
+  letter-spacing: 0.2rem;
+}
+@media (max-width: 56.25em) {
+  .section__attraction-details .attraction-booking-box {
+    padding: 0 1rem 4rem 1rem;
+  }
+}
+.section__attraction-details .attraction-booking-box__txt {
+  margin-bottom: 2rem;
+}
+.section__attraction-details .attraction-booking-box__txt .heading__forth {
+  margin-bottom: 1.5rem;
+}
+.section__attraction-details .attraction-booking-box__txt__description {
+  line-height: 2.2rem;
+}
+.section__attraction-details .attraction-booking-box__form-booking {
+  background-color: #e8e8e8;
+  padding: 1.5rem 2rem;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  padding-bottom: 2.6rem;
+  line-height: 2.2rem;
+}
+.section__attraction-details .attraction-booking-box__form-booking .input__date {
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  font-size: 1.6rem;
+  font-family: Noto Sans TC, sans-serif;
+  border: none;
+  border-radius: 0.2rem;
+}
+.section__attraction-details .attraction-booking-box__form-booking__description {
+  line-height: 2.4rem;
+}
+.section__attraction-details .attraction-booking-box__form-booking__select-time {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+.section__attraction-details .attraction-booking-box__form-booking__select-time .btn__radio {
+  -webkit-appearance: none;
+  width: 2rem;
+  height: 2rem;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 0.2rem solid #fff;
+}
+.section__attraction-details .attraction-booking-box__form-booking__select-time .btn__radio:checked {
+  background-color: #448899;
+}
+.section__attraction-details .attraction-booking-box__form-booking .btn__ctn {
+  color: #fff;
+  font-size: 1.9rem;
+  align-self: flex-start;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s;
+}
+.section__attraction-details .attraction-booking-box__form-booking .btn__ctn:hover {
+  background-color: #366d7a;
+}
+
+.section__attraction-description {
+  padding: 5rem 1rem;
+  color: #666666;
+  font-weight: 400;
+  line-height: 2.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.section__attraction-description .attraction-description-box .heading__forth {
+  line-height: 2;
+}/*# sourceMappingURL=attraction.css.map */

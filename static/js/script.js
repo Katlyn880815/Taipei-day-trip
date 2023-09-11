@@ -76,7 +76,7 @@ function putIntoMrtList(mrt) {
   listMrtContainer.appendChild(liEl);
 }
 
-function putIntoAttractionList(attractionName, mrt, category, imgUrl) {
+function putIntoAttractionList(attractionName, mrt, category, imgUrl, id) {
   let liElement = document.createElement("li");
   liElement.className = "attractions__item";
 
@@ -89,8 +89,12 @@ function putIntoAttractionList(attractionName, mrt, category, imgUrl) {
   imgElement.className = "attractions__item__top-box__img";
 
   let h3Element = document.createElement("h3");
-  h3Element.textContent = attractionName;
+  let aElement = document.createElement("a");
+  aElement.textContent = attractionName;
+  aElement.classList.add("attractions__item__top-box__heading__link");
+  aElement.setAttribute("href", `http://127.0.0.1:3000/attraction/${id}`);
   h3Element.className = "heading__tertiary attractions__item__top-box__heading";
+  h3Element.appendChild(aElement);
 
   let bottomBox = document.createElement("div");
   bottomBox.className = "attractions__item__bottom-box";
@@ -117,13 +121,13 @@ function renderAttractionList(data) {
       site.name,
       site.mrt,
       site.category,
-      site.images[0]
+      site.images[0],
+      site.id
     );
     listAttractionsContainer.appendChild(attractionHtml);
   });
 }
 
-//節流
 function throttle(callback, time = 500) {
   let timer = null;
   return function () {
@@ -140,9 +144,12 @@ function throttle(callback, time = 500) {
 
 //scroll eventListener callback func
 function handleScroll() {
+  //整個元素的高度不包含margin, padding, border
   let clientHeight =
     document.documentElement.clientHeight || document.body.clientHeight;
+  //scrollTop-內容被捲動的距離
   let scrollTop = document.documentElement.scrollTop;
+  //scrollHeight-整個元素的高度包含卷軸
   let scrollHeight = document.documentElement.scrollHeight;
   console.log(scrollTop + clientHeight, scrollHeight);
   if (scrollTop + clientHeight + 10 >= scrollHeight) {
@@ -222,3 +229,22 @@ async function getData(path) {
     }
   }
 }
+
+//event delegation
+listAttractionsContainer.addEventListener(
+  "click",
+  function (e) {
+    let currentElement = e.target;
+    let liEl;
+
+    console.log(currentElement);
+    if (currentElement.parentNode.tagName.toLowerCase() !== "li") {
+      currentElement = currentElement.parentNode;
+    }
+
+    liEl = currentElement.parentNode;
+    let href = liEl.querySelector("a").getAttribute("href");
+    window.location.href = href;
+  },
+  false
+);

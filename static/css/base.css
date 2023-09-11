@@ -16,13 +16,19 @@
 html {
   font-size: 62.5%;
   font-family: Noto Sans TC, sans-serif;
-  height: 100vh;
+  overflow: -moz-hidden-unscrollable;
 }
 
 body {
   font-size: 1.6rem;
+  font-weight: 400;
   line-height: 1.33rem;
+  -ms-overflow-style: none;
+  overflow: auto;
   height: 100vh;
+}
+body::-webkit-scrollbar {
+  display: none;
 }
 
 a {
@@ -34,9 +40,11 @@ a {
   margin: 0 auto;
 }
 
+.heading {
+  font-weight: 700;
+}
 .heading__primary {
   font-size: 3rem;
-  font-weight: 700;
   line-height: 3.4rem;
 }
 .heading__primary a {
@@ -51,6 +59,13 @@ a {
   font-size: 1.6rem;
   line-height: 1.33rem;
   font-weight: 700;
+}
+.heading__forth {
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+}
+.heading__fifth {
+  font-size: 1.6rem;
 }
 
 .btn {

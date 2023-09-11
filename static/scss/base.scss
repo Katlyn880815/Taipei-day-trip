@@ -24,6 +24,7 @@ html {
 
 body {
   font-size: 1.6rem;
+  font-weight: 400;
   line-height: $line-height-sm;
   -ms-overflow-style: none;
   overflow: auto;
@@ -44,9 +45,9 @@ a {
 }
 
 .heading {
+  font-weight: 700;
   &__primary {
     font-size: 3rem;
-    font-weight: 700;
     line-height: $line-height-lg;
 
     a {
@@ -65,6 +66,15 @@ a {
     font-size: 1.6rem;
     line-height: $line-height-sm;
     font-weight: 700;
+  }
+
+  &__forth {
+    font-size: 2.4rem;
+  }
+
+  &__fifth {
+    font-size: 1.6rem;
+    line-height: 3.2rem;
   }
 }
 
