@@ -460,6 +460,7 @@ main {
 .section__attraction-description {
   padding: 5rem 1rem;
   color: #666666;
+  letter-spacing: 0.2rem;
   font-weight: 400;
   line-height: 2.4rem;
   display: flex;
