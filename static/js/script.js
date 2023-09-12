@@ -244,7 +244,10 @@ listAttractionsContainer.addEventListener(
 
     liEl = currentElement.parentNode;
     let href = liEl.querySelector("a").getAttribute("href");
-    window.location.href = href;
+    if (liEl.tagName.toLowerCase() === "li") {
+      window.location.href = href;
+    }
+    console.log(liEl);
   },
   false
 );

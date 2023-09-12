@@ -21,8 +21,8 @@ const attractionDescriptionBoxes = document.querySelectorAll(
 btnsCarousel.forEach((btn) => {
   btn.addEventListener("click", function () {
     const offset = btn.dataset.carouselBtn === "next" ? 1 : -1;
-    const slides = btn.closest("[data-carousel").querySelector("[data-slide]");
-    const activeSlide = slides.querySelector("[data-active");
+    const slides = btn.closest("[data-carousel]").querySelector("[data-slide]");
+    const activeSlide = slides.querySelector("[data-active]");
     let newIndex = [...slides.children].indexOf(activeSlide) + offset;
     if (newIndex < 0) newIndex = slides.children.length - 1;
     if (newIndex >= slides.children.length) newIndex = 0;
@@ -128,22 +128,24 @@ async function render(id) {
 
 indicatorBar.addEventListener("click", function (e) {
   let targetIndicator = e.target.getAttribute("id");
-  let li = e.target;
-  let activeIndicator = document.querySelector("[data-indicator]");
-  console.log(li);
-  if (li !== activeIndicator) {
-    li.dataset.indicator = true;
-    delete activeIndicator.dataset.indicator;
-  }
 
-  let indexOfId = targetIndicator.lastIndexOf("_");
-  let indicatorId = Number(targetIndicator.slice(indexOfId + 1));
+  if (targetIndicator !== null) {
+    let li = e.target;
+    let activeIndicator = document.querySelector("[data-indicator]");
+    console.log(li);
+    if (li !== activeIndicator) {
+      li.dataset.indicator = true;
+      delete activeIndicator.dataset.indicator;
+    }
+    let indexOfId = targetIndicator.lastIndexOf("_");
+    let indicatorId = Number(targetIndicator.slice(indexOfId + 1));
 
-  let targetImg = document.querySelector(`#img_${indicatorId}`);
-  let activeSlide = document.querySelector("[data-active]");
-  if (targetImg !== activeSlide) {
-    targetImg.dataset.active = true;
-    delete activeSlide.dataset.active;
+    let targetImg = document.querySelector(`#img_${indicatorId}`);
+    let activeSlide = document.querySelector("[data-active]");
+    if (targetImg !== activeSlide) {
+      targetImg.dataset.active = true;
+      delete activeSlide.dataset.active;
+    }
   }
 });
 
