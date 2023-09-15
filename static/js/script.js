@@ -12,6 +12,34 @@ let keywordOuter;
 //First time to load page
 window.onload = init();
 
+const observer = new IntersectionObserver(
+  (entries, owner) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        console.log("entering viewport");
+        observer.unobserve(entry.target);
+        if (nextPage === null) {
+          console.log("資料載入完畢");
+        } else if (keywordOuter !== null && keywordOuter !== undefined) {
+          handleNextPage(nextPage, keywordOuter);
+        } else {
+          handleNextPage(nextPage);
+        }
+      } else {
+        console.log("目標離開viewport");
+      }
+    });
+  },
+  {
+    threshold: 1,
+  }
+);
+
+function observeLastElemnet() {
+  const lastElement = document.querySelector(".attractions__item:last-child");
+  observer.observe(lastElement);
+}
+
 async function init() {
   const attractionInitData = await getData("/attractions");
   const mrtsInitData = await getData("/mrts");
@@ -19,6 +47,8 @@ async function init() {
     ([attractions, mrts]) => {
       renderAttractionList(attractions.data);
       nextPage = attractions.nextPage;
+      observeLastElemnet();
+      //Mrt bar
       mrts.data.forEach((mrt) => putIntoMrtList(mrt));
       scrollBar([leftBtn, rightBtn]);
       let mrtItems = document.querySelectorAll(
@@ -41,6 +71,7 @@ async function init() {
   );
 }
 
+/*
 //Fix firefox event listener issue
 let isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
 
@@ -48,6 +79,7 @@ document.addEventListener(
   isFirefox ? "DOMMouseScroll" : "scroll",
   throttle(handleScroll)
 );
+*/
 
 //scorllBar
 function scrollBar(btns) {
@@ -128,6 +160,7 @@ function renderAttractionList(data) {
   });
 }
 
+/*
 function throttle(callback, time = 500) {
   let timer = null;
   return function () {
@@ -141,7 +174,9 @@ function throttle(callback, time = 500) {
     }, time);
   };
 }
+*/
 
+/*
 //scroll eventListener callback func
 function handleScroll() {
   //整個元素的高度不包含margin, padding, border
@@ -165,6 +200,7 @@ function handleScroll() {
     }
   }
 }
+*/
 
 async function handleNextPage(page, keyword = "") {
   let path = "";
@@ -176,6 +212,7 @@ async function handleNextPage(page, keyword = "") {
   const nextPageData = await getData(path);
   if (nextPage !== null) {
     renderAttractionList(nextPageData.data);
+    observeLastElemnet();
   }
   nextPage = nextPageData.nextPage;
   console.log(nextPageData);
@@ -188,7 +225,7 @@ searchBtn.addEventListener("click", function (e) {
   //initialize
   keywordOuter = null;
   nextPage = null;
-  document.removeEventListener("scroll", throttle(handleScroll));
+  // document.removeEventListener("scroll", throttle(handleScroll));
   listAttractionsContainer.innerHTML = "";
 
   //start to fetch data
@@ -208,7 +245,8 @@ async function fetchByKeyword(path, keyword) {
     if (dataKeyword.nextPage !== null) {
       keywordOuter = keyword;
       nextPage = dataKeyword.nextPage;
-      document.addEventListener("scroll", throttle(handleScroll));
+      // document.addEventListener("scroll", throttle(handleScroll));
+      observeLastElemnet();
     }
   }
 }
@@ -237,7 +275,6 @@ listAttractionsContainer.addEventListener(
     let currentElement = e.target;
     let liEl;
 
-    console.log(currentElement);
     if (currentElement.parentNode.tagName.toLowerCase() !== "li") {
       currentElement = currentElement.parentNode;
     }
@@ -247,7 +284,6 @@ listAttractionsContainer.addEventListener(
     if (liEl.tagName.toLowerCase() === "li") {
       window.location.href = href;
     }
-    console.log(liEl);
   },
   false
 );

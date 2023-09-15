@@ -1,11 +1,10 @@
-// Attractions.html
+//getting href
 let href = window.location.href;
 let indexOfAttractionIdInHref = href.lastIndexOf("/");
 indexOfAttractionIdInHref = Number(href.slice(indexOfAttractionIdInHref + 1));
-let indicatorBar = document.querySelector(".indicator-bar");
 
-let isLoading = false;
-
+//getting elements
+const indicatorBar = document.querySelector(".indicator-bar");
 const btnsCarousel = document.querySelectorAll("[data-carousel-btn]");
 const carousel = document.querySelector("[data-slide]");
 const txtBoxOfAttractionInfo = document.querySelector(
@@ -18,21 +17,43 @@ const attractionDescriptionBoxes = document.querySelectorAll(
   ".attraction-description-box"
 );
 
+let isLoading = false;
+
+//Images carousel
 btnsCarousel.forEach((btn) => {
   btn.addEventListener("click", function () {
+    //if user clicks btn, the offset variable is determined by which btn user clicks
+    //offset variable is used to adding the index of slides
     const offset = btn.dataset.carouselBtn === "next" ? 1 : -1;
-    const slides = btn.closest("[data-carousel]").querySelector("[data-slide]");
-    const activeSlide = slides.querySelector("[data-active]");
-    let newIndex = [...slides.children].indexOf(activeSlide) + offset;
-    if (newIndex < 0) newIndex = slides.children.length - 1;
-    if (newIndex >= slides.children.length) newIndex = 0;
 
-    console.log(slides.children[newIndex]);
+    //btn.closest will find the closest parent element which has [data-carousel] property
+    //and selecting the container of our slides
+    //so slides equl to container of all slides
+    const slides = btn.closest("[data-carousel]").querySelector("[data-slide]");
+
+    //activeSlide variable is determined by which slide has [data-active] property from everytime user clicks the button
+    const activeSlide = slides.querySelector("[data-active]");
+
+    //newIndex variable will be used to provide the which slide should shown
+    //we takes all the slides by using rest operator into an array, and newIndex would be the activeSlide plus offset
+    let newIndex = [...slides.children].indexOf(activeSlide) + offset;
+
+    console.log("first:", newIndex);
+
+    //here's need to set a if condition.
+    //if newIndex < 0, means the active slide is the first slides, so we actually want to show the final slide for user
+    // so newIndex will be the length of slides - 1; which is the finall slide
+    if (newIndex < 0) newIndex = slides.children.length - 1;
+    console.log("second:", newIndex);
+
+    //if newIndex greater than length of slides.children, means the last one is the finall slide, so newIndex should back to zero, which is the first slide
+    if (newIndex >= slides.children.length) newIndex = 0;
+    console.log("third:", newIndex);
+
     slides.children[newIndex].dataset.active = true;
     delete activeSlide.dataset.active;
 
     let currentIndicator = document.querySelector(`#indicator_${newIndex}`);
-    console.log(currentIndicator);
     let activeIndicator = document.querySelector("[data-indicator]");
     currentIndicator.dataset.indicator = true;
     delete activeIndicator.dataset.indicator;
@@ -128,7 +149,7 @@ async function render(id) {
 
 indicatorBar.addEventListener("click", function (e) {
   let targetIndicator = e.target.getAttribute("id");
-
+  console.log(targetIndicator);
   if (targetIndicator !== null) {
     let li = e.target;
     let activeIndicator = document.querySelector("[data-indicator]");
