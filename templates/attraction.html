@@ -1,50 +1,27 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>台北一日遊</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="{{url_for('static', filename='css/main.css')}}"
-    />
-    <!-- <link rel="stylesheet" href="../static/css/main.css" /> -->
-  </head>
-  <body>
-    <header class="header container">
-      <h1 class="heading__primary">
-        <a href="/"> 台北一日遊 </a>
-      </h1>
-      <nav class="header__nav">
-        <a href="" class="header__nav__item">預定行程</a>
-        <a href="" class="header__nav__item">登入/註冊</a>
-      </nav>
-    </header>
-    <main>
-      <section class="section__attraction-details container">
-        <div class="attraction-img-box carousel" data-carousel="">
-          <button class="btn btn__carousel__prev" data-carousel-btn="prev">
-            <img
-              src="../static/image/btn_leftArrow.png"
-              alt="it's a icon point to the left"
-              class="icon icon__left"
-            />
-          </button>
-          <button class="btn btn__carousel__next" data-carousel-btn="next">
-            <img
-              src="../static/image/btn_rightArrow.png"
-              alt="it's a icon point to the right"
-              class="icon icon_right"
-            />
-          </button>
-          <ul class="attraction-img-box__img-list" data-slide="">
-            <!-- <li class="attraction-img-box__img-list__slide" data-active>
+{% extends "base.html" %}
+<title>{% block title %}台北一日遊-景點{% endblock %}</title>
+{% block style%}
+<link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}" />
+<!-- <link rel="stylesheet" href="../static/css/main.css" /> -->
+{% endblock %} {% block main %}
+<section class="section__attraction-details container">
+  <div class="attraction-img-box carousel" data-carousel="">
+    <button class="btn btn__carousel__prev" data-carousel-btn="prev">
+      <img
+        src="../static/image/btn_leftArrow.png"
+        alt="it's a icon point to the left"
+        class="icon icon__left"
+      />
+    </button>
+    <button class="btn btn__carousel__next" data-carousel-btn="next">
+      <img
+        src="../static/image/btn_rightArrow.png"
+        alt="it's a icon point to the right"
+        class="icon icon_right"
+      />
+    </button>
+    <ul class="attraction-img-box__img-list" data-slide="">
+      <!-- <li class="attraction-img-box__img-list__slide" data-active>
               <img
                 class="attraction-img-box__img-list__slide__img"
                 src="../static/image/img.png"
@@ -53,72 +30,61 @@
             <li class="attraction-img-box__img-list__slide">
               <img class="attraction-img-box__img-list__slide__img" src="" />
             </li> -->
-          </ul>
-          <div class="indicator-bar">
-            <!-- <a href="" class="indicator-bar__indicator"></a>
+    </ul>
+    <div class="indicator-bar">
+      <!-- <a href="" class="indicator-bar__indicator"></a>
             <a href="" class="indicator-bar__indicator"></a> -->
-          </div>
-        </div>
-        <div class="attraction-booking-box">
-          <div class="attraction-booking-box__txt">
-            <!-- <h4 class="heading__forth">平安鐘</h4>
+    </div>
+  </div>
+  <div class="attraction-booking-box">
+    <div class="attraction-booking-box__txt">
+      <!-- <h4 class="heading__forth">平安鐘</h4>
             <p class="attraction-booking-box__txt__description">
               公共藝術 at 忠孝復興
             </p> -->
-          </div>
-          <form class="attraction-booking-box__form-booking">
-            <p class="heading__tertiary">訂購導覽行程</p>
-            <p class="attraction-booking-box__form-booking__description">
-              以此景點為中心的一日行程，帶您探索城市角落故事
-            </p>
-            <label for="date" class="label-group"
-              >選擇日期：
-              <input
-                id="date"
-                name="date"
-                type="date"
-                class="input__group input__date"
-              />
-            </label>
-            <div class="attraction-booking-box__form-booking__select-time">
-              <p class="label-group">選擇時間：</p>
-              <input
-                type="radio"
-                id="daytime"
-                class="btn__radio"
-                name="time"
-                checked
-              />
-              <label for="daytime" class="label-group" for="daytime"
-                >上半天</label
-              >
-              <input
-                type="radio"
-                id="nightime"
-                class="btn__radio"
-                name="time"
-              />
-              <label for="nightime" class="label-group">下半天</label>
-            </div>
-            <p id="price">導覽費用：新台幣2000元</p>
-            <button class="btn btn__ctn">開始預約行程</button>
-          </form>
-        </div>
-      </section>
-      <section class="section__attraction-description container">
-        <!-- <p class="attraction-description descriptiion"></p> -->
-        <div class="attraction-description-box">
-          <h5 class="heading__fifth">景點地址：</h5>
-        </div>
-        <div class="attraction-description-box">
-          <h5 class="heading__fifth">交通方式：</h5>
-        </div>
-      </section>
-    </main>
-    <footer class="footer">
-      <p class="copyright">COPYRIGHT © 2023 台北一日遊</p>
-    </footer>
-    <script src="{{url_for('static', filename='/js/attraction.js')}}"></script>
-    <!-- <script src="../static/js/attraction.js"></script> -->
-  </body>
-</html>
+    </div>
+    <form class="attraction-booking-box__form-booking">
+      <p class="heading__tertiary">訂購導覽行程</p>
+      <p class="attraction-booking-box__form-booking__description">
+        以此景點為中心的一日行程，帶您探索城市角落故事
+      </p>
+      <label for="date" class="label-group"
+        >選擇日期：
+        <input
+          id="date"
+          name="date"
+          type="date"
+          class="input__group input__date"
+        />
+      </label>
+      <div class="attraction-booking-box__form-booking__select-time">
+        <p class="label-group">選擇時間：</p>
+        <input
+          type="radio"
+          id="daytime"
+          class="btn__radio"
+          name="time"
+          checked
+        />
+        <label for="daytime" class="label-group" for="daytime">上半天</label>
+        <input type="radio" id="nightime" class="btn__radio" name="time" />
+        <label for="nightime" class="label-group">下半天</label>
+      </div>
+      <p id="price">導覽費用：新台幣2000元</p>
+      <button class="btn btn__ctn">開始預約行程</button>
+    </form>
+  </div>
+</section>
+<section class="section__attraction-description container">
+  <!-- <p class="attraction-description descriptiion"></p> -->
+  <div class="attraction-description-box">
+    <h5 class="heading__fifth">景點地址：</h5>
+  </div>
+  <div class="attraction-description-box">
+    <h5 class="heading__fifth">交通方式：</h5>
+  </div>
+</section>
+{% endblock%} {% block script %}
+<script src="{{url_for('static', filename='/js/attraction.js')}}"></script>
+<!-- <script src="../static/js/attraction.js"></script> -->
+{% endblock %}

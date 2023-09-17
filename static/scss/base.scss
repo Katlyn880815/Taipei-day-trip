@@ -33,6 +33,8 @@ body {
   &::-webkit-scrollbar {
     display: none;
   }
+
+  position: relative;
 }
 
 a {

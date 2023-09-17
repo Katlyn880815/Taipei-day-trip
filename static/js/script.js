@@ -4,6 +4,8 @@ const rightBtn = document.querySelector(".btn__right");
 const listAttractionsContainer = document.querySelector(".list-attractions");
 const searchBar = document.querySelector("#search-bar");
 const searchBtn = document.querySelector(".btn__search");
+const loginBtn = document.querySelector("#login");
+const loginBox = document.querySelector(".user-login");
 
 let isLoading = false;
 let nextPage;
@@ -61,7 +63,6 @@ async function init() {
           nextPage = null;
           keywordOuter = null;
           listAttractionsContainer.innerHTML = "";
-          document.removeEventListener("scroll", throttle(scroll));
           let path = `/attractions?page=0&keyword=${mrt.text}`;
           //fetch data
           fetchByKeyword(path, mrt.text);
@@ -238,7 +239,7 @@ searchBtn.addEventListener("click", function (e) {
 async function fetchByKeyword(path, keyword) {
   const dataKeyword = await getData(path);
   if (dataKeyword.data === undefined) {
-    listAttractionsContainer.innerHTML = result.message;
+    listAttractionsContainer.innerHTML = dataKeyword.message;
     return;
   } else {
     renderAttractionList(dataKeyword.data);
@@ -259,6 +260,7 @@ async function getData(path) {
     try {
       const response = await fetch(prefixHttp + path);
       const jsonData = await response.json();
+      console.log(jsonData);
       isLoading = false;
       return jsonData;
     } catch {
@@ -287,3 +289,43 @@ listAttractionsContainer.addEventListener(
   },
   false
 );
+
+loginBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  loginBox.classList.add("show");
+  const closeBtn = document.querySelector(".icon__close");
+  closeBtn.addEventListener("click", function (e) {
+    loginBox.classList.remove("show");
+  });
+
+  const form = document.querySelector(".user-login__box__form-login");
+  const switchBtn = document.querySelector(".btn__switch");
+  const submitLogin = document.querySelector(".btn__login");
+  const title = loginBox.querySelector("#login_title");
+
+  switchBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    console.log(form.dataset.login);
+    if (form.dataset.login === "true") {
+      const inputName = document.createElement("input");
+      submitLogin.textContent = "註冊帳戶";
+      title.textContent = "註冊會員帳號";
+      inputName.setAttribute("type", "text");
+      inputName.setAttribute("placeholder", "請輸入姓名");
+      inputName.classList.add("user-login__box__form-login__input");
+
+      console.log(form.children[0]);
+      form.insertBefore(inputName, form.children[0]);
+      switchBtn.textContent = "已經有帳戶了？點此登入";
+      form.dataset.login = false;
+    } else {
+      const inputFirst = form.querySelector("input:first-child");
+      title.textContent = "登入會員帳號";
+      inputFirst.remove(inputFirst);
+      console.log(inputFirst);
+      submitLogin.textContent = "登入帳戶";
+      switchBtn.textContent = "還沒有帳戶？點此註冊";
+      form.dataset.login = true;
+    }
+  });
+});
