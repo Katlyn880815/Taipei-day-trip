@@ -1,18 +1,4 @@
-from module import db_connection as db
-
-def load_data(sql, params = '', data_count = 'various'):
-    con = db.connection_pool.get_connection()
-    cursor = con.cursor(dictionary = True)
-    if(params == ''):
-        cursor.execute(sql)
-    else:
-        cursor.execute(sql, (params))
-    if(data_count == 'various'):
-        result = cursor.fetchall()
-    else:
-        result = cursor.fetchone()
-    con.close()
-    return result
+from module.load_data import load_data
 
 #GETTING IMAGES URL OF EACH ATTRACTIONS
 def get_images_url(attraction_id):
