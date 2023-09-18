@@ -11,7 +11,6 @@ let isLoading = false;
 let nextPage;
 let keywordOuter;
 
-//First time to load page
 window.onload = init();
 
 const observer = new IntersectionObserver(
@@ -71,16 +70,6 @@ async function init() {
     }
   );
 }
-
-/*
-//Fix firefox event listener issue
-let isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
-
-document.addEventListener(
-  isFirefox ? "DOMMouseScroll" : "scroll",
-  throttle(handleScroll)
-);
-*/
 
 //scorllBar
 function scrollBar(btns) {
@@ -161,48 +150,6 @@ function renderAttractionList(data) {
   });
 }
 
-/*
-function throttle(callback, time = 500) {
-  let timer = null;
-  return function () {
-    if (timer !== null) {
-      clearTimeout(timer);
-    }
-
-    timer = setTimeout(() => {
-      callback.call();
-      timer = null;
-    }, time);
-  };
-}
-*/
-
-/*
-//scroll eventListener callback func
-function handleScroll() {
-  //整個元素的高度不包含margin, padding, border
-  let clientHeight =
-    document.documentElement.clientHeight || document.body.clientHeight;
-  //scrollTop-內容被捲動的距離
-  let scrollTop = document.documentElement.scrollTop;
-  //scrollHeight-整個元素的高度包含卷軸
-  let scrollHeight = document.documentElement.scrollHeight;
-  console.log(scrollTop + clientHeight, scrollHeight);
-  if (scrollTop + clientHeight + 10 >= scrollHeight) {
-    console.log("bottom");
-    if (nextPage == null) {
-      console.log("資料載入完畢");
-      return;
-    } else if (keywordOuter !== null && keywordOuter !== undefined) {
-      console.log(nextPage);
-      handleNextPage(nextPage, keywordOuter);
-    } else if (nextPage !== null) {
-      handleNextPage(nextPage);
-    }
-  }
-}
-*/
-
 async function handleNextPage(page, keyword = "") {
   let path = "";
   if (keyword !== "") {
@@ -226,7 +173,6 @@ searchBtn.addEventListener("click", function (e) {
   //initialize
   keywordOuter = null;
   nextPage = null;
-  // document.removeEventListener("scroll", throttle(handleScroll));
   listAttractionsContainer.innerHTML = "";
 
   //start to fetch data
@@ -308,6 +254,8 @@ loginBtn.addEventListener("click", function (e) {
     console.log(form.dataset.login);
     if (form.dataset.login === "true") {
       const inputName = document.createElement("input");
+      const btnLogin = form.querySelector(".btn__login");
+      btnLogin.setAttribute("id", "btn_signup");
       submitLogin.textContent = "註冊帳戶";
       title.textContent = "註冊會員帳號";
       inputName.setAttribute("type", "text");
@@ -320,6 +268,8 @@ loginBtn.addEventListener("click", function (e) {
       form.dataset.login = false;
     } else {
       const inputFirst = form.querySelector("input:first-child");
+      const btnLogin = form.querySelector(".btn__login");
+      btnLogin.setAttribute("id", "btn_login");
       title.textContent = "登入會員帳號";
       inputFirst.remove(inputFirst);
       console.log(inputFirst);

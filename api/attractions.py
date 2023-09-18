@@ -7,7 +7,7 @@ attractions = Blueprint('attractions', __name__)
 def setting_response(result):
     result_json = json.dumps(result, ensure_ascii= False)
     response = make_response(result_json)
-    response.headers['Content-Type'] = 'application/json; charset=utf-8'
+    response.headers['Content-Type'] = 'application/getjson; charset=utf-8'
     setting_status_code_for_error_client_side = ['找不到符合關鍵字的資料', '這個關鍵字已經沒有更多資料', '頁碼輸入錯誤，請輸入數字', 'No more attractions', '編號輸入錯誤，請輸入數字', '無此編碼，請重新輸入']
     try:
         error_message = result['message']

@@ -171,7 +171,6 @@ indicatorBar.addEventListener("click", function (e) {
 });
 
 let selecTimeRadioBtns = document.querySelectorAll('[name="time"]');
-console.log(selecTimeRadioBtns);
 selecTimeRadioBtns.forEach((btn) => {
   btn.addEventListener("click", function () {
     let priceElement = document.querySelector("#price");
