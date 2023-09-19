@@ -1,27 +1,6 @@
 @import "variables.scss";
 @import "mixin.scss";
 
-.header {
-  padding: 1rem 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  &.container {
-    padding: 1rem;
-  }
-
-  &__nav {
-    &__item {
-      color: $color-dark-grey;
-      padding: 1rem;
-      &:hover {
-        color: #000;
-      }
-    }
-  }
-}
-
 .section__hero {
   background: url("../image/welcome.png");
   height: 32rem;
@@ -184,16 +163,6 @@
         font-weight: 500;
       }
     }
-  }
-}
-
-.footer {
-  background-color: $color-dark-grey;
-  text-align: center;
-  .copyright {
-    color: $color-pure-white;
-    font-weight: 700;
-    padding: 4rem 0;
   }
 }
 

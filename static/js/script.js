@@ -4,7 +4,6 @@ const rightBtn = document.querySelector(".btn__right");
 const listAttractionsContainer = document.querySelector(".list-attractions");
 const searchBar = document.querySelector("#search-bar");
 const searchBtn = document.querySelector(".btn__search");
-const loginBtn = document.querySelector("#login");
 const loginBox = document.querySelector(".user-login");
 
 let isLoading = false;
@@ -67,6 +66,9 @@ async function init() {
           fetchByKeyword(path, mrt.text);
         });
       });
+      // //Login status
+      // myModule.renderNav(loginStatus);
+      // myModule.handleLoginBlock(loginStatus);
     }
   );
 }
@@ -199,7 +201,8 @@ async function fetchByKeyword(path, keyword) {
 }
 
 async function getData(path) {
-  let prefixHttp = "http://35.162.233.114:3000/api";
+  // let prefixHttp = "http://35.162.233.114:3000/api";
+  let prefixHttp = "http://127.0.0.1:3000/api";
   console.log(isLoading);
   if (isLoading === false) {
     isLoading = true;
@@ -235,47 +238,3 @@ listAttractionsContainer.addEventListener(
   },
   false
 );
-
-loginBtn.addEventListener("click", function (e) {
-  e.preventDefault();
-  loginBox.classList.add("show");
-  const closeBtn = document.querySelector(".icon__close");
-  closeBtn.addEventListener("click", function (e) {
-    loginBox.classList.remove("show");
-  });
-
-  const form = document.querySelector(".user-login__box__form-login");
-  const switchBtn = document.querySelector(".btn__switch");
-  const submitLogin = document.querySelector(".btn__login");
-  const title = loginBox.querySelector("#login_title");
-
-  switchBtn.addEventListener("click", function (e) {
-    e.preventDefault();
-    console.log(form.dataset.login);
-    if (form.dataset.login === "true") {
-      const inputName = document.createElement("input");
-      const btnLogin = form.querySelector(".btn__login");
-      btnLogin.setAttribute("id", "btn_signup");
-      submitLogin.textContent = "註冊帳戶";
-      title.textContent = "註冊會員帳號";
-      inputName.setAttribute("type", "text");
-      inputName.setAttribute("placeholder", "請輸入姓名");
-      inputName.classList.add("user-login__box__form-login__input");
-
-      console.log(form.children[0]);
-      form.insertBefore(inputName, form.children[0]);
-      switchBtn.textContent = "已經有帳戶了？點此登入";
-      form.dataset.login = false;
-    } else {
-      const inputFirst = form.querySelector("input:first-child");
-      const btnLogin = form.querySelector(".btn__login");
-      btnLogin.setAttribute("id", "btn_login");
-      title.textContent = "登入會員帳號";
-      inputFirst.remove(inputFirst);
-      console.log(inputFirst);
-      submitLogin.textContent = "登入帳戶";
-      switchBtn.textContent = "還沒有帳戶？點此註冊";
-      form.dataset.login = true;
-    }
-  });
-});

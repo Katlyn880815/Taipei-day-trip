@@ -1,5 +1,5 @@
 from flask import Blueprint, request, make_response
-from module import get_user
+from module import get_user_info as get_user
 import json
 
 user = Blueprint('user', __name__)
@@ -10,7 +10,8 @@ def handle_register():
 
 @user.route('/user/auth', methods=['GET'])
 def check_login_status():
-    return
+    data = None
+    return json.dumps(data)
 
 @user.route('/user/auth', methods=['PUT'])
 def handle_login():

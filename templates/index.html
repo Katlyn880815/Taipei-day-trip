@@ -3,35 +3,7 @@
 {% endblock %}
 <title>{% block title %}台北一日遊-首頁 {% endblock %}</title>
 
-{% block login %}
-<div class="user-login">
-  <div class="user-login__box">
-    <div class="user-login__box__header">
-      <h4 class="heading__forth" id="login_title">登入會員帳號</h4>
-      <img
-        src="../static/image/icon_close.png"
-        alt="關閉圖示"
-        class="icon icon__close"
-      />
-    </div>
-    <!-- 切換登入與註冊，js只要改這邊即可 -->
-    <form class="user-login__box__form-login" data-login="true">
-      <input
-        type="mail"
-        placeholder="請輸入電子信箱"
-        class="user-login__box__form-login__input"
-      />
-      <input
-        type="password"
-        placeholder="請輸入密碼"
-        class="user-login__box__form-login__input"
-      />
-      <button class="btn btn__login" id="btn_login">登入帳戶</button>
-      <button class="btn__switch">還沒有帳戶？點此註冊</button>
-    </form>
-  </div>
-</div>
-{% endblock %} {% block main %}
+{% block main %}
 <section class="section__hero">
   <div class="container section__hero__container">
     <div class="slogan">
@@ -93,5 +65,6 @@
   </ul>
 </section>
 {% endblock %} {% block script %}
+<script src="{{url_for('static', filename='/js/myModules/user-login-state.js')}}"></script>
 <script src="{{url_for('static', filename='/js/script.js')}}"></script>
 {% endblock %}

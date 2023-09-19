@@ -13,14 +13,44 @@
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
-    {% block login %} {% endblock %}
+    <div class="user-login">
+      <div class="user-login__box">
+        <div class="user-login__box__header">
+          <h4 class="heading__forth" id="login_title">登入會員帳號</h4>
+          <img
+            src="../static/image/icon_close.png"
+            alt="關閉圖示"
+            class="icon icon__close"
+          />
+        </div>
+        <!-- 切換登入與註冊，js只要改這邊即可 -->
+        <form class="user-login__box__form-login" data-login="true">
+          <input
+            type="mail"
+            placeholder="請輸入電子信箱"
+            class="user-login__box__form-login__input"
+            id="user-email"
+            name="user-email"
+          />
+          <input
+            type="password"
+            placeholder="請輸入密碼"
+            class="user-login__box__form-login__input"
+            id="user-password"
+            name="user-password"
+          />
+          <button class="btn btn__login" id="btn-action">登入帳戶</button>
+          <button class="btn__switch">還沒有帳戶？點此註冊</button>
+        </form>
+      </div>
+    </div>
     <header class="header container">
       <h1 class="heading__primary">
         <a href="/"> 台北一日遊 </a>
       </h1>
-      <nav class="header__nav">
+      <nav class="header__nav" id="header-nav-bar">
         <a class="header__nav__item">預定行程</a>
-        <a class="header__nav__item" id="login">登入/註冊</a>
+        <!-- <a class="header__nav__item" id="login">登入/註冊</a> -->
       </nav>
     </header>
     <main>{% block main %} {% endblock %}</main>

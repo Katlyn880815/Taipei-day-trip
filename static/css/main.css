@@ -76,8 +76,6 @@ a {
   cursor: pointer;
 }
 
-/* COLORS */
-/* TYPEPOGRAPHY*/
 .header {
   padding: 1rem 0;
   display: flex;
@@ -90,11 +88,24 @@ a {
 .header__nav__item {
   color: #666666;
   padding: 1rem;
+  cursor: pointer;
 }
 .header__nav__item:hover {
   color: #000;
 }
 
+.footer {
+  background-color: #666666;
+  text-align: center;
+}
+.footer .copyright {
+  color: #fff;
+  font-weight: 700;
+  padding: 4rem 0;
+}
+
+/* COLORS */
+/* TYPEPOGRAPHY*/
 .section__hero {
   background: url("../image/welcome.png");
   height: 32rem;
@@ -242,16 +253,6 @@ a {
   font-weight: 500;
 }
 
-.footer {
-  background-color: #666666;
-  text-align: center;
-}
-.footer .copyright {
-  color: #fff;
-  font-weight: 700;
-  padding: 4rem 0;
-}
-
 .user-login {
   position: fixed;
   width: 100vw;
@@ -316,6 +317,7 @@ a {
 .user-login__box__form-login .btn__switch {
   border: none;
   background-color: #fff;
+  cursor: pointer;
 }
 
 .show {
