@@ -66,9 +66,6 @@ async function init() {
           fetchByKeyword(path, mrt.text);
         });
       });
-      // //Login status
-      // myModule.renderNav(loginStatus);
-      // myModule.handleLoginBlock(loginStatus);
     }
   );
 }

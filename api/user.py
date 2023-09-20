@@ -1,18 +1,20 @@
-from flask import Blueprint, request, make_response
-from module import get_user_info as get_user
+from flask import Blueprint, request, make_response, jsonify
+from module import CRUD_user as crud
 import json
 
 user = Blueprint('user', __name__)
 
 @user.route('/user', methods=['POST'])
 def handle_register():
-    return
+    user_register_data = request.get_json()
+    result = crud.check_email_is_exist(user_register_data['email'], user_register_data['password'], user_register_data['name'])
+    print(result)
+    return json.dumps(result, ensure_ascii= False)
 
-@user.route('/user/auth', methods=['GET'])
+@user.route('/user/auth', methods=['GET', 'PUT'])
 def check_login_status():
-    data = None
-    return json.dumps(data)
-
-@user.route('/user/auth', methods=['PUT'])
-def handle_login():
-    return
+    result = None
+    if(request.method == 'PUT'):
+        user_login_data = request.get_json()
+        result = crud.load(user_login_data['email'], user_login_data['password'])
+    return json.dumps(result, ensure_ascii= False)

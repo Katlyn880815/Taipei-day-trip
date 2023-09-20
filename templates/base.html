@@ -24,24 +24,75 @@
           />
         </div>
         <!-- 切換登入與註冊，js只要改這邊即可 -->
-        <form class="user-login__box__form-login" data-login="true">
+        <form
+          class="user-login__box__form-login form-active"
+          data-form="true"
+          id="form-login"
+          method="PUT"
+        >
           <input
             type="mail"
             placeholder="請輸入電子信箱"
             class="user-login__box__form-login__input"
-            id="user-email"
+            id="login-user-email"
             name="user-email"
           />
           <input
             type="password"
             placeholder="請輸入密碼"
             class="user-login__box__form-login__input"
-            id="user-password"
+            id="login-user-password"
             name="user-password"
           />
-          <button class="btn btn__login" id="btn-action">登入帳戶</button>
-          <button class="btn__switch">還沒有帳戶？點此註冊</button>
+          <button
+            class="btn btn__login"
+            id="btn-login"
+            data-isLoginState="true"
+          >
+            登入帳戶
+          </button>
+          <button class="btn__switch" id="btn-switch-register">
+            還沒有帳戶？點此註冊
+          </button>
         </form>
+        <form
+          class="user-login__box__form-login"
+          data-form="false"
+          id="form-register"
+        >
+          <input
+            type="text"
+            placeholder="請輸入姓名"
+            class="user-login__box__form-login__input"
+            id="register-user-name"
+            name="user-name"
+          />
+          <input
+            type="mail"
+            placeholder="請輸入電子信箱"
+            class="user-login__box__form-login__input"
+            id="register-user-email"
+            name="user-email"
+          />
+          <input
+            type="password"
+            placeholder="請輸入密碼"
+            class="user-login__box__form-login__input"
+            id="register-user-password"
+            name="user-password"
+          />
+          <button
+            class="btn btn__login"
+            id="btn-resgister"
+            data-isLoginState="true"
+          >
+            註冊帳戶
+          </button>
+          <button class="btn__switch" id="btn-switch-login">
+            已經有帳戶？點此登入
+          </button>
+        </form>
+        <p class="hint"></p>
       </div>
     </div>
     <header class="header container">

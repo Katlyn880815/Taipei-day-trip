@@ -13,3 +13,11 @@ def load_data(sql, params = '', data_count = 'various'):
         result = cursor.fetchone()
     con.close()
     return result
+
+def insert_data(sql, params):
+    con = db.connection_pool.get_connection()
+    cursor = con.cursor(dictionary = True)
+    cursor.execute(sql, (params))
+    con.commit()
+    con.close()
+    return

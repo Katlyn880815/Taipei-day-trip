@@ -118,3 +118,17 @@ a {
     padding: 4rem 0;
   }
 }
+
+.hint {
+  font-size: 1.6rem;
+  text-align: center;
+  &__error {
+    color: red;
+    padding: 1.5rem 0;
+  }
+
+  &__success {
+    color: green;
+    padding: 1.5rem 0;
+  }
+}
