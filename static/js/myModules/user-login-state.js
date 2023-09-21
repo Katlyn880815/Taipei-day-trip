@@ -10,16 +10,7 @@ async function initForLoginState() {
     const userLoginBlock = document.querySelector(".user-login");
     loginBtn.addEventListener("click", function () {
       userLoginBlock.classList.add("show");
-      const formLogin = document.querySelector("#form-login");
-      const formRegister = document.querySelector("#form-register");
-      const h4El = document.querySelector("#login_title");
-      const hint = document.querySelector(".hint");
-      h4El.textContent = "登入會員帳號";
-      hint.textContent = "";
-      hint.classList.remove("hint__error");
-      hint.classList.remove("hint__success");
-      formLogin.classList.add("form-active");
-      formRegister.classList.remove("form-active");
+      formInit();
       handleSwitch();
       const btnsLogin = document.querySelectorAll(".btn__login");
       btnsLogin.forEach((btn) => {
@@ -38,15 +29,36 @@ async function initForLoginState() {
   }
 }
 
+function formInit() {
+  const formLogin = document.querySelector("#form-login");
+  const formRegister = document.querySelector("#form-register");
+  const h4El = document.querySelector("#login_title");
+  const hint = document.querySelector(".hint");
+  const inputEmail = document.querySelector("#login-user-email");
+  const inputPassword = document.querySelector("#login-user-password");
+  h4El.textContent = "登入會員帳號";
+  hint.textContent = "";
+  hint.classList.remove("hint__error");
+  hint.classList.remove("hint__success");
+  formLogin.classList.add("form-active");
+  formRegister.classList.remove("form-active");
+  inputEmail.value = "";
+  inputPassword.value = "";
+}
+
 function handleSwitch() {
   const btns = document.querySelectorAll(".btn__switch");
   const formLogin = document.querySelector("#form-login");
   const formRegister = document.querySelector("#form-register");
   const h4El = document.querySelector("#login_title");
+  const hint = document.querySelector(".hint");
   btns.forEach((btn) => {
     btn.addEventListener("click", function (e) {
       e.preventDefault();
       console.log(btn.id);
+      hint.textContent = "";
+      hint.classList.remove("hint__error");
+      hint.classList.remove("hint__success");
       if (btn.id === "btn-switch-register") {
         formLogin.classList.remove("form-active");
         formRegister.classList.add("form-active");
@@ -61,12 +73,26 @@ function handleSwitch() {
 }
 
 async function getData2(path, method = "GET", reqObj = {}) {
-  // let prefixHttp = "http://35.162.233.114:3000/api";
-  let prefixHttp = "http://127.0.0.1:3000/api";
+  const storedToken = localStorage.getItem("token");
+  let headers;
+  if (storedToken) {
+    headers = {
+      Authorization: "Bearer " + storedToken,
+      "Content-Type": "application/json",
+    };
+  } else {
+    headers = {
+      "Content-Type": "application/json",
+    };
+  }
+  let prefixHttp = "http://35.162.233.114:3000/api";
+  // let prefixHttp = "http://127.0.0.1:3000/api";
   try {
     let response;
     if (method === "GET") {
-      response = await fetch(prefixHttp + path);
+      response = await fetch(prefixHttp + path, {
+        headers: headers,
+      });
     } else {
       response = await fetch(prefixHttp + path, {
         method: method,
@@ -112,9 +138,19 @@ async function checkTheInput(btn) {
       null
     );
     if (checkIsInvalid === true) {
-      handleLogin(userEmail.value, userPassword.value);
+      const loginResult = await handleLogin(
+        userEmail.value,
+        userPassword.value
+      );
+      if (loginResult === true) {
+        handleLoginSucess();
+      } else {
+        hintEl.textContent = loginResult;
+        hintEl.classList.add("hint__error");
+      }
     } else {
       hintEl.textContent = checkIsInvalid;
+      hintEl.classList.add("hint__error");
     }
     //登入流程
   } else {
@@ -153,8 +189,6 @@ async function checkTheInput(btn) {
 }
 
 function isUserInputValid(inputPassword, inputEmail, inputUserName, form) {
-  const passwordRegex = /[\W_]/;
-  const nameRegex = /[\W_]/;
   const email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   if (form === "register") {
@@ -190,4 +224,20 @@ async function handleLogin(userEmail, userPassword) {
   };
 
   const loginReq = await getData2("/user/auth", "PUT", reqObj);
+  if (loginReq.hasOwnProperty("ok")) handleLoginSucess(loginReq);
+  return loginReq.message;
+}
+
+function handleLoginSucess(loginRes) {
+  const JWTtoken = loginRes.token;
+  localStorage.setItem("token", JWTtoken);
+  location.reload();
+}
+
+function handleLogOut() {
+  const logOutbtn = document.querySelector("#logOut");
+  logOutbtn.addEventListener("click", function (e) {
+    localStorage.clear();
+    location.reload();
+  });
 }

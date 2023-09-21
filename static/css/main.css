@@ -283,6 +283,7 @@ a {
   position: relative;
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 .user-login__box::before {
   content: "";
@@ -323,6 +324,10 @@ a {
 }
 .user-login__box__form-login__input {
   padding: 1.5rem;
+}
+.user-login__box__form-login__input:focus {
+  outline: 1px solid #000;
+  border-radius: 0.5rem;
 }
 .user-login__box__form-login .btn__login {
   color: #fff;

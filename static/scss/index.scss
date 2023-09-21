@@ -183,6 +183,7 @@
     position: relative;
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 
     &::before {
       content: "";
@@ -227,6 +228,11 @@
 
       &__input {
         padding: 1.5rem;
+
+        &:focus {
+          outline: 1px solid #000;
+          border-radius: 0.5rem;
+        }
       }
 
       .btn__login {
