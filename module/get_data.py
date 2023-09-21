@@ -1,25 +1,4 @@
-import mysql.connector
-import mysql.connector.pooling
-
-db_config = {
-    'user': 'root',
-    'host': 'localhost',
-    'password': '1234',
-    'database': 'taipei_attractions'
-}
-
-connection_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name= 'my_pool', pool_size= 5, **db_config)
-
-def load_data(sql, params = ''):
-    con = connection_pool.get_connection()
-    cursor = con.cursor(dictionary = True)
-    if(params == ''):
-        cursor.execute(sql)
-    else:
-        cursor.execute(sql, (params))
-    result = cursor.fetchall()
-    con.close()
-    return result
+from module.load_data import load_data
 
 #GETTING IMAGES URL OF EACH ATTRACTIONS
 def get_images_url(attraction_id):
@@ -65,11 +44,9 @@ def get_attractions(page):
 #GETTING ATTRACTIONS BY KEYWORD
 def get_attraction_by_keyword(keyword, page=0):
     keyword = '%' + keyword + '%'
-    con = connection_pool.get_connection()
-    cursor = con.cursor(dictionary=True)
-    cursor.execute('select count(*) from attractions_details inner join mrt_list on attractions_details.mrt_id = mrt_list.id where attractions_details.name like %s or mrt_list.mrt like %s', (keyword, keyword,))
-    count = cursor.fetchone()['count(*)']
-    con.close()
+    #找到所有符合關鍵字資料
+    count = load_data('select count(*) from attractions_details inner join mrt_list on attractions_details.mrt_id = mrt_list.id where attractions_details.name like %s or mrt_list.mrt like %s', (keyword, keyword,), 'one')
+    count = count['count(*)']
     limit = 12
     offset = page * limit
     if count == 0:
@@ -93,11 +70,7 @@ def get_attraction_by_keyword(keyword, page=0):
 #GETTING ATTRACTIONS BY ID
 def get_attraction_by_id(id):
     try:
-        con = connection_pool.get_connection()
-        cursor = con.cursor(dictionary = True)
-        cursor.execute('SELECT attractions_details.id, attractions_details.name, attractions_details.category, attractions_details.description, attractions_details.address, attractions_details.transport, attractions_details.lat, attractions_details.lng, mrt_list.mrt FROM attractions_details INNER JOIN mrt_list ON attractions_details.mrt_id = mrt_list.id WHERE attractions_details.id = %s', (id,))
-        result = cursor.fetchone()
-        con.close()
+        result = load_data('SELECT attractions_details.id, attractions_details.name, attractions_details.category, attractions_details.description, attractions_details.address, attractions_details.transport, attractions_details.lat, attractions_details.lng, mrt_list.mrt FROM attractions_details INNER JOIN mrt_list ON attractions_details.mrt_id = mrt_list.id WHERE attractions_details.id = %s', (id,), 'one')
     except:
         return {
             'error': True,

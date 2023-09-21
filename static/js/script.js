@@ -4,13 +4,41 @@ const rightBtn = document.querySelector(".btn__right");
 const listAttractionsContainer = document.querySelector(".list-attractions");
 const searchBar = document.querySelector("#search-bar");
 const searchBtn = document.querySelector(".btn__search");
+const loginBox = document.querySelector(".user-login");
 
 let isLoading = false;
 let nextPage;
 let keywordOuter;
 
-//First time to load page
 window.onload = init();
+
+const observer = new IntersectionObserver(
+  (entries, owner) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        console.log("entering viewport");
+        observer.unobserve(entry.target);
+        if (nextPage === null) {
+          console.log("資料載入完畢");
+        } else if (keywordOuter !== null && keywordOuter !== undefined) {
+          handleNextPage(nextPage, keywordOuter);
+        } else {
+          handleNextPage(nextPage);
+        }
+      } else {
+        console.log("目標離開viewport");
+      }
+    });
+  },
+  {
+    threshold: 1,
+  }
+);
+
+function observeLastElemnet() {
+  const lastElement = document.querySelector(".attractions__item:last-child");
+  observer.observe(lastElement);
+}
 
 async function init() {
   const attractionInitData = await getData("/attractions");
@@ -19,6 +47,8 @@ async function init() {
     ([attractions, mrts]) => {
       renderAttractionList(attractions.data);
       nextPage = attractions.nextPage;
+      observeLastElemnet();
+      //Mrt bar
       mrts.data.forEach((mrt) => putIntoMrtList(mrt));
       scrollBar([leftBtn, rightBtn]);
       let mrtItems = document.querySelectorAll(
@@ -31,7 +61,6 @@ async function init() {
           nextPage = null;
           keywordOuter = null;
           listAttractionsContainer.innerHTML = "";
-          document.removeEventListener("scroll", throttle(scroll));
           let path = `/attractions?page=0&keyword=${mrt.text}`;
           //fetch data
           fetchByKeyword(path, mrt.text);
@@ -40,14 +69,6 @@ async function init() {
     }
   );
 }
-
-//Fix firefox event listener issue
-let isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
-
-document.addEventListener(
-  isFirefox ? "DOMMouseScroll" : "scroll",
-  throttle(handleScroll)
-);
 
 //scorllBar
 function scrollBar(btns) {
@@ -128,44 +149,6 @@ function renderAttractionList(data) {
   });
 }
 
-function throttle(callback, time = 500) {
-  let timer = null;
-  return function () {
-    if (timer !== null) {
-      clearTimeout(timer);
-    }
-
-    timer = setTimeout(() => {
-      callback.call();
-      timer = null;
-    }, time);
-  };
-}
-
-//scroll eventListener callback func
-function handleScroll() {
-  //整個元素的高度不包含margin, padding, border
-  let clientHeight =
-    document.documentElement.clientHeight || document.body.clientHeight;
-  //scrollTop-內容被捲動的距離
-  let scrollTop = document.documentElement.scrollTop;
-  //scrollHeight-整個元素的高度包含卷軸
-  let scrollHeight = document.documentElement.scrollHeight;
-  console.log(scrollTop + clientHeight, scrollHeight);
-  if (scrollTop + clientHeight + 10 >= scrollHeight) {
-    console.log("bottom");
-    if (nextPage == null) {
-      console.log("資料載入完畢");
-      return;
-    } else if (keywordOuter !== null && keywordOuter !== undefined) {
-      console.log(nextPage);
-      handleNextPage(nextPage, keywordOuter);
-    } else if (nextPage !== null) {
-      handleNextPage(nextPage);
-    }
-  }
-}
-
 async function handleNextPage(page, keyword = "") {
   let path = "";
   if (keyword !== "") {
@@ -176,6 +159,7 @@ async function handleNextPage(page, keyword = "") {
   const nextPageData = await getData(path);
   if (nextPage !== null) {
     renderAttractionList(nextPageData.data);
+    observeLastElemnet();
   }
   nextPage = nextPageData.nextPage;
   console.log(nextPageData);
@@ -188,7 +172,6 @@ searchBtn.addEventListener("click", function (e) {
   //initialize
   keywordOuter = null;
   nextPage = null;
-  document.removeEventListener("scroll", throttle(handleScroll));
   listAttractionsContainer.innerHTML = "";
 
   //start to fetch data
@@ -201,26 +184,29 @@ searchBtn.addEventListener("click", function (e) {
 async function fetchByKeyword(path, keyword) {
   const dataKeyword = await getData(path);
   if (dataKeyword.data === undefined) {
-    listAttractionsContainer.innerHTML = result.message;
+    listAttractionsContainer.innerHTML = dataKeyword.message;
     return;
   } else {
     renderAttractionList(dataKeyword.data);
     if (dataKeyword.nextPage !== null) {
       keywordOuter = keyword;
       nextPage = dataKeyword.nextPage;
-      document.addEventListener("scroll", throttle(handleScroll));
+      // document.addEventListener("scroll", throttle(handleScroll));
+      observeLastElemnet();
     }
   }
 }
 
 async function getData(path) {
   let prefixHttp = "http://35.162.233.114:3000/api";
+  // let prefixHttp = "http://127.0.0.1:3000/api";
   console.log(isLoading);
   if (isLoading === false) {
     isLoading = true;
     try {
       const response = await fetch(prefixHttp + path);
       const jsonData = await response.json();
+      console.log(jsonData);
       isLoading = false;
       return jsonData;
     } catch {
@@ -237,14 +223,15 @@ listAttractionsContainer.addEventListener(
     let currentElement = e.target;
     let liEl;
 
-    console.log(currentElement);
     if (currentElement.parentNode.tagName.toLowerCase() !== "li") {
       currentElement = currentElement.parentNode;
     }
 
     liEl = currentElement.parentNode;
     let href = liEl.querySelector("a").getAttribute("href");
-    window.location.href = href;
+    if (liEl.tagName.toLowerCase() === "li") {
+      window.location.href = href;
+    }
   },
   false
 );

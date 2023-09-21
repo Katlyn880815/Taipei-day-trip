@@ -1,19 +1,9 @@
-import mysql.connector
-import mysql.connector.pooling
 import json
-
-db_config = {
-    'user': 'root',
-    'host': 'localhost',
-    'password': '1234',
-    'database': 'taipei_attractions'
-}
-
-connection_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name= 'my_pool', pool_size= 5, **db_config)
+from module import db_connection as db
 
 #function load_data
 def crud_data(sql, params = ''):
-    con = connection_pool.get_connection()
+    con = db.connection_pool.get_connection()
     try:
        cursor = con.cursor(dictionary = True)
        if(params == ''):
@@ -29,7 +19,7 @@ def crud_data(sql, params = ''):
 
 # function load_data
 def load_data (sql, params = ''):
-    con = connection_pool.get_connection()
+    con = db.connection_pool.get_connection()
     cursor = con.cursor(dictionary = True)
     if(params == ''):
         cursor.execute(sql)

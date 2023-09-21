@@ -4,6 +4,24 @@ import json
 
 attractions = Blueprint('attractions', __name__)
 
+def setting_response(result):
+    result_json = json.dumps(result, ensure_ascii= False)
+    response = make_response(result_json)
+    response.headers['Content-Type'] = 'application/getjson; charset=utf-8'
+    setting_status_code_for_error_client_side = ['找不到符合關鍵字的資料', '這個關鍵字已經沒有更多資料', '頁碼輸入錯誤，請輸入數字', 'No more attractions', '編號輸入錯誤，請輸入數字', '無此編碼，請重新輸入']
+    try:
+        error_message = result['message']
+        for message in setting_status_code_for_error_client_side:
+            if(error_message == message):
+                response.status_code = 404
+                return response
+        response.status_code = 500
+    except:
+        response.status_code = 200
+    finally:
+        return response
+        
+
 @attractions.route('/attractions')
 def handle_attractions_api():
     page = request.args.get('page', 0)
@@ -19,53 +37,26 @@ def handle_attractions_api():
             'error': True,
             'message': '頁碼輸入錯誤，請輸入數字'
         }
-    response = make_response(json.dumps(result_attractions, ensure_ascii=False))
-    response.headers['Content-Type'] = 'application/json; charset=utf-8'
-    try:
-        error = result_attractions['error']
-        if(result_attractions['message'] == '找不到符合關鍵字的資料' or result_attractions['message'] == '這個關鍵字已經沒有更多資料' or result_attractions['message'] == '頁碼輸入錯誤，請輸入數字' or result_attractions['message'] == 'No more attractions'):
-            response.status_code = 404
-        else:
-            response.status_code = 500
-    except:
-        response.status_code = 200
-    finally:
-        return response
+    response = setting_response(result_attractions)
+    return response
     
 @attractions.route('/attraction/<attractionId>')
 def handle_attractions_api_by_id(attractionId):
     try:
         attractionId = int(attractionId)
     except:
-        response = make_response(json.dumps({
-             'error': True,
-             'message': '編號輸入錯誤，請輸入數字'
-		}, ensure_ascii=False))
-        response.status_code = 400
-        response.headers['Content-Type'] = 'application/json; charset=utf-8'
+        result = {
+            'error': True,
+            'message': '編號輸入錯誤，請輸入數字'
+        }
+        response = setting_response(result)
         return response
     result = get_data.get_attraction_by_id(attractionId)
-    response = make_response(json.dumps(result, ensure_ascii=False))
-    try:
-        error = result['error']
-        if(result['message'] == '無此編碼，請重新輸入'):
-             response.status_code = 404
-        else:
-            response.status_code = 500
-    except:
-        response.status_code = 200
-    response.headers['Content-Type'] = 'application/json; charset=utf-8'
+    response = setting_response(result)
     return response
 
 @attractions.route('/mrts')
 def handle_attractions_api_mrt():
     result = get_data.get_attractions_by_mrt()
-    response = make_response(json.dumps(result, ensure_ascii=False))
-    response.headers['Content-Type'] = 'application/json; charset=utf-8'
-    try:
-        error = result['error']
-        response.status_code = 500
-    except:
-        response.status_code = 200
-    finally:
-        return response
+    response = setting_response(result)
+    return response

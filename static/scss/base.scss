@@ -33,6 +33,8 @@ body {
   &::-webkit-scrollbar {
     display: none;
   }
+
+  position: relative;
 }
 
 a {
@@ -83,4 +85,50 @@ a {
   border: none;
   border-radius: 0 0.5rem 0.5rem 0;
   cursor: pointer;
+}
+
+.header {
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &.container {
+    padding: 1rem;
+  }
+
+  &__nav {
+    &__item {
+      color: $color-dark-grey;
+      padding: 1rem;
+      cursor: pointer;
+      &:hover {
+        color: #000;
+      }
+    }
+  }
+}
+
+.footer {
+  background-color: $color-dark-grey;
+  text-align: center;
+  .copyright {
+    color: $color-pure-white;
+    font-weight: 700;
+    padding: 4rem 0;
+  }
+}
+
+.hint {
+  font-size: 1.6rem;
+  text-align: center;
+  &__error {
+    color: red;
+    padding: 1.5rem 0;
+  }
+
+  &__success {
+    color: green;
+    padding: 1.5rem 0;
+  }
 }
