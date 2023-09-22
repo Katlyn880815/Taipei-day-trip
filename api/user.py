@@ -1,7 +1,9 @@
 from flask import Blueprint, request, make_response, jsonify
 from module import CRUD_user as crud
 import json, jwt, datetime, re
+from dotenv import load_dotenv, dotenv_values
 
+config = dotenv_values('.env')
 user = Blueprint('user', __name__)
 
 def generate_jwt(payload, secret_key):
@@ -41,7 +43,8 @@ def handle_register():
 
 @user.route('/user/auth', methods=['GET', 'PUT'])
 def check_login():
-    secret_key = 'katlyn123'
+    load_dotenv()
+    secret_key = config['secret_key']
     if(request.method == 'GET'):
         print(request.headers.get("Authorization"))
         if 'Authorization' in request.headers:
