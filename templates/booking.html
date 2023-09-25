@@ -1,0 +1,128 @@
+{% extends "base.html" %} {% block style %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}" />
+{% endblock %}
+
+<title>{% block title %}台北一日遊-預訂頁面{% endblock %}</title>
+
+{% block main %}
+<section class="section__cart container">
+    <h6 class="heading__sixth container__sm">
+      您好，Katlyn，待預定的行程如下：
+    </h6>
+  </div>
+  <div class="cart container__sm">
+    <div class="cart__pic-box">
+      <img
+        src="../static/image/image-10.png"
+        alt=""
+        class="cart__pic-box__pic"
+      />
+    </div>
+    <div class="cart__infos-box">
+      <h5 class="heading__fifth cart__infos-box__heading">
+        台北一日遊：平安鐘
+      </h5>
+      <img src="../static/image/icon_delete.png" alt="icon icon__delete" class="icon icon__delete">
+      <div class="cart__infos-box__details">
+        <p>
+          日期：<span class="cart__infos-box__detail" id="booking-date"></span>
+        </p>
+        <p>
+          時間：<span class="cart__infos-box__detail" id="booking-time"></span>
+        </p>
+        <p>
+          費用：新台幣<span
+            class="cart__infos-box__detail"
+            id="booking-spending"
+          ></span>
+        </p>
+        <p>
+          地點：<span class="cart__infos-box__detail" id="booking-site"></span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section__booking-form container">
+  <form class="form__booking container">
+    <div class="form__booking__user-infos container__sm">
+      <h6 class="heading__sixth">您的聯絡資訊</h6>
+      <label for="name-booking">
+        聯絡姓名：
+        <input
+          id="name-booking"
+          name="name-booking"
+          type="text"
+          class="input_group"
+        />
+      </label>
+      <label for="email-booking">
+        連絡信箱：
+        <input
+          id="email-bookig"
+          name="email-booking"
+          type="email"
+          class="input_group"
+        />
+      </label>
+      <label for="phone-booking">
+        手機號碼：
+        <input
+          id="phone-booking"
+          name="phone-booking"
+          type="text"
+          inputmode="numeric"
+          class="input_group"
+        />
+      </label>
+      <p class="reminding">
+        請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。
+      </p>
+    </div>
+  </form>
+  <form class="form__payment container">
+    <div class="form__payment__infos container__sm">
+      <h6 class="heading__sixth">信用卡付款資料</h6>
+      <label for="card-number">
+        卡片號碼：
+        <input
+          id="card-number"
+          name="card-number"
+          type="text"
+          pattern="[0-9]*"
+          inputmode="numeric"
+          class="input_group"
+        />
+      </label>
+      <label for="exp-date">
+        過期時間：
+        <input
+          id="exp-date"
+          name="exp-date"
+          type="date"
+          pattern="[0-9]*"
+          placeholder="MM/YY"
+          class="input_group"
+        />
+      </label>
+      <label for="cvv">
+        驗證密碼：
+        <input
+          id="cvv"
+          name="cvv"
+          placeholder="CVV"
+          pattern="[0-9]*"
+          class="input_group"
+          inputmode="numeric"
+        />
+      </label>
+    </div>
+  </form>
+  <div class="price">
+    <p>總價：新台幣<span id="total-price"></span></p>
+    <button class="btn btn__booking">確認訂購並付款</button>
+  </div>
+</section>
+{% endblock %} {% block script %}
+<script src="{{url_for('static', filename='/js/myModules/user-login-state.js')}}"></script>
+{% endblock %}

@@ -5,28 +5,39 @@ async function initForLoginState() {
   renderNav(isLogin);
   console.log(isLogin);
   if (isLogin === null) {
-    //登入點擊
+    // 登入點擊
     const loginBtn = document.querySelector("#login");
-    const userLoginBlock = document.querySelector(".user-login");
+    const bookingBtn = document.querySelector("#booking-btn");
+    console.log(bookingBtn);
+    bookingBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      login();
+    });
     loginBtn.addEventListener("click", function () {
-      userLoginBlock.classList.add("show");
-      formInit();
-      handleSwitch();
-      const btnsLogin = document.querySelectorAll(".btn__login");
-      btnsLogin.forEach((btn) => {
-        btn.addEventListener("click", function (e) {
-          e.preventDefault();
-          checkTheInput(btn);
-        });
-      });
-      const closeLoginBlock = document.querySelector(".icon__close");
-      closeLoginBlock.addEventListener("click", function () {
-        userLoginBlock.classList.remove("show");
-      });
+      login();
     });
   } else {
     handleLogOut();
   }
+}
+
+function login() {
+  const userLoginBlock = document.querySelector(".user-login");
+  console.log(userLoginBlock);
+  userLoginBlock.classList.add("show");
+  formInit();
+  handleSwitch();
+  const btnsLogin = document.querySelectorAll(".btn__login");
+  btnsLogin.forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      checkTheInput(btn);
+    });
+  });
+  const closeLoginBlock = document.querySelector(".icon__close");
+  closeLoginBlock.addEventListener("click", function () {
+    userLoginBlock.classList.remove("show");
+  });
 }
 
 function formInit() {
@@ -110,6 +121,11 @@ async function getData2(path, method = "GET", reqObj = {}) {
   }
 }
 
+function handleBooking(loginState) {
+  if (loginState === null) {
+    userLoginBlock.classList.add("show");
+  }
+}
 //Rendering navigation
 function renderNav(status) {
   const headerNavBar = document.querySelector("#header-nav-bar");
