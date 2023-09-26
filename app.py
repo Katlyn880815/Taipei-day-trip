@@ -1,6 +1,7 @@
 from flask import *
 from api.attractions import attractions
 from api.user import user
+from api.booking import booking
 from flask_cors import CORS
 
 app=Flask(__name__)
@@ -11,6 +12,7 @@ app.config["TEMPLATES_AUTO_RELOAD"]=True
 #register blueprint
 app.register_blueprint(attractions, url_prefix='/api')
 app.register_blueprint(user, url_prefix='/api')
+app.register_blueprint(booking, url_prefix="/api")
 
 # Pages
 @app.route("/")

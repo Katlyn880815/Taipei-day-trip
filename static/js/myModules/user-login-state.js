@@ -1,14 +1,20 @@
 initForLoginState();
 
+let loginState;
+let userId;
+const btnCta = document.querySelector("#btn-cta") ?? null;
+
 async function initForLoginState() {
   const isLogin = await getData2("/user/auth", "GET");
   renderNav(isLogin);
-  console.log(isLogin);
   if (isLogin === null) {
-    // 登入點擊
+    loginState = false;
     const loginBtn = document.querySelector("#login");
     const bookingBtn = document.querySelector("#booking-btn");
-    console.log(bookingBtn);
+    if (btnCta !== null) {
+      handleNewBooking();
+    }
+    loginState = false;
     bookingBtn.addEventListener("click", function (e) {
       e.preventDefault();
       login();
@@ -17,8 +23,41 @@ async function initForLoginState() {
       login();
     });
   } else {
+    loginState = true;
+    console.log(isLogin.id);
+    userId = isLogin.id;
+    if (btnCta !== null) {
+      handleNewBooking();
+    }
     handleLogOut();
   }
+}
+
+async function handleNewBooking() {
+  btnCta.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (loginState === false) {
+      login();
+    } else {
+      const href = window.location.href;
+      let indexOfAttractionIdInHref = href.lastIndexOf("/");
+      indexOfAttractionIdInHref = Number(
+        href.slice(indexOfAttractionIdInHref + 1)
+      );
+
+      const date = document.querySelector("#date").value;
+      const time = document.querySelector("input[name='time']:checked").id;
+      const price = time === "daytime" ? 2000 : 2500;
+      const reqObj = {
+        date,
+        time,
+        price,
+        userId: userId,
+      };
+      console.log(reqObj);
+      const isSuccessful = getData2("/booking", "POST", reqObj);
+    }
+  });
 }
 
 function login() {
