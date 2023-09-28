@@ -609,6 +609,7 @@ main .section__cart .cart {
   display: flex;
   align-items: center;
   gap: 3rem;
+  display: none;
 }
 @media (max-width: 75em) {
   main .section__cart .cart {
@@ -659,6 +660,7 @@ main .section__cart .cart__infos-box__details p {
 }
 main .section__booking-form {
   line-height: normal;
+  display: none;
 }
 main .section__booking-form .form__booking {
   padding: 4rem 0;

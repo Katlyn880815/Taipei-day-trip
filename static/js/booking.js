@@ -13,6 +13,8 @@ async function initForBooking() {
 }
 
 function renderOrder(orderInfo) {
+  const cartBlock = document.querySelector(".cart");
+  const formBlock = document.querySelector(".section__booking-form");
   const date = document.querySelector("#booking-date");
   const time = document.querySelector("#booking-time");
   const spending = document.querySelector("#booking-spending");
@@ -20,6 +22,9 @@ function renderOrder(orderInfo) {
   const img = document.querySelector("#attraction-img");
   const attractionName = document.querySelector("#attraction_name");
   const totalPrice = document.querySelector("#total-price");
+  cartBlock.style.display = "flex";
+  formBlock.style.display = "block";
+  ``;
   date.textContent = orderInfo["date"];
   time.textContent = orderInfo["time"] === "daytime" ? "上午" : "下午";
   spending.textContent = orderInfo["price"];
@@ -37,7 +42,7 @@ function handleOrderNotFound() {
   hint.style.display = "block";
   cartBlock.style.display = "none";
   sectionBookingForm.style.display = "none";
-  footer.style.height = "-webkit-fill-available";
+  footer.style.height = "71vh";
 }
 
 function handleDeleteAttraction(userId) {

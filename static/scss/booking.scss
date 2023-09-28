@@ -22,6 +22,7 @@ main {
       display: flex;
       align-items: center;
       gap: 3rem;
+      display: none;
 
       @include respond(tab-land) {
         display: block;
@@ -77,6 +78,7 @@ main {
 
   .section__booking-form {
     line-height: normal;
+    display: none;
     .form__booking {
       padding: 4rem 0;
       color: $color-dark-grey;
