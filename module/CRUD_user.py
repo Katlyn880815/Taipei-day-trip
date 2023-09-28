@@ -1,12 +1,8 @@
 from module.load_data import *
 from module import web_token
-from dotenv import dotenv_values
 from flask import request
 
-config = dotenv_values('.env')
-secret_key = config['secret_key']
-
-
+secret_key = 'katlyn1234'
 
 def check_email_is_exist(email, password, name):
     result = load_data('select email from user where email = %s', (email,), 'one')

@@ -1,8 +1,6 @@
 import jwt, datetime
-from dotenv import dotenv_values
 
-config = dotenv_values('.env')
-secret_key = config['secret_key']
+secret_key = 'katlyn1234'
 
 def generate_jwt(payload, secret_key):
     expiration_time = datetime.datetime.utcnow()+ datetime.timedelta(days=7)
