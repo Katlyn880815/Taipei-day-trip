@@ -14,12 +14,16 @@ main {
       margin-bottom: 3.5rem;
     }
 
+    .hint__not-found {
+      display: none;
+    }
+
     .cart {
       display: flex;
       align-items: center;
       gap: 3rem;
 
-      @include respond(tab-port) {
+      @include respond(tab-land) {
         display: block;
       }
 
@@ -29,10 +33,11 @@ main {
         padding: 2.8rem 0;
 
         &__pic {
+          width: 26.6rem;
+          object-fit: cover;
+          vertical-align: middle;
           @include respond(tab-land) {
             width: 100%;
-            object-fit: cover;
-            vertical-align: middle;
           }
         }
       }

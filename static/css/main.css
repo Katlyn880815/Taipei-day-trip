@@ -131,6 +131,13 @@ a {
   border: 0.1rem solid #e8e8e8;
 }
 
+.hint__select-date {
+  color: red;
+  display: inline-block;
+  padding-left: 1rem;
+  display: none;
+}
+
 /* COLORS */
 /* TYPEPOGRAPHY*/
 .section__hero {
@@ -596,12 +603,15 @@ main .section__cart .heading__sixth {
   min-width: 100rem;
   margin-bottom: 3.5rem;
 }
+main .section__cart .hint__not-found {
+  display: none;
+}
 main .section__cart .cart {
   display: flex;
   align-items: center;
   gap: 3rem;
 }
-@media (max-width: 56.25em) {
+@media (max-width: 75em) {
   main .section__cart .cart {
     display: block;
   }
@@ -611,11 +621,14 @@ main .section__cart .cart__pic-box {
   overflow: hidden;
   padding: 2.8rem 0;
 }
+main .section__cart .cart__pic-box__pic {
+  width: 26.6rem;
+  object-fit: cover;
+  vertical-align: middle;
+}
 @media (max-width: 75em) {
   main .section__cart .cart__pic-box__pic {
     width: 100%;
-    object-fit: cover;
-    vertical-align: middle;
   }
 }
 main .section__cart .cart__infos-box {

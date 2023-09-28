@@ -44,7 +44,8 @@ def handle_register():
 @user.route('/user/auth', methods=['GET', 'PUT'])
 def check_login():
     load_dotenv()
-    secret_key = config['secret_key']
+    # secret_key = config['secret_key']
+    secret_key = 'katlyn1234'
     if(request.method == 'GET'):
         print(request.headers.get("Authorization"))
         if 'Authorization' in request.headers:

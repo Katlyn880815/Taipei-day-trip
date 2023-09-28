@@ -147,3 +147,11 @@ a {
   width: 20rem;
   border: 0.1rem solid $color-border-grey;
 }
+
+.hint {
+  &__select-date {
+    color: red;
+    padding-left: 1rem;
+    display: none;
+  }
+}

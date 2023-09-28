@@ -3,16 +3,21 @@ initForLoginState();
 let loginState;
 let userId;
 const btnCta = document.querySelector("#btn-cta") ?? null;
+const userNameBlock = document.querySelector("#user-name") ?? null;
+const isBookingPage = document.querySelector(".section__cart") ?? null;
 
 async function initForLoginState() {
   const isLogin = await getData2("/user/auth", "GET");
   renderNav(isLogin);
+  console.log(isLogin);
   if (isLogin === null) {
     loginState = false;
     const loginBtn = document.querySelector("#login");
     const bookingBtn = document.querySelector("#booking-btn");
     if (btnCta !== null) {
       handleNewBooking();
+    } else if (isBookingPage !== null) {
+      handlebookingPageLogout();
     }
     loginState = false;
     bookingBtn.addEventListener("click", function (e) {
@@ -24,17 +29,18 @@ async function initForLoginState() {
     });
   } else {
     loginState = true;
-    console.log(isLogin.id);
     userId = isLogin.id;
     if (btnCta !== null) {
       handleNewBooking();
+    } else if (userNameBlock !== null) {
+      userNameBlock.textContent = isLogin["name"];
     }
     handleLogOut();
   }
 }
 
 async function handleNewBooking() {
-  btnCta.addEventListener("click", function (e) {
+  btnCta.addEventListener("click", async function (e) {
     e.preventDefault();
     if (loginState === false) {
       login();
@@ -44,18 +50,25 @@ async function handleNewBooking() {
       indexOfAttractionIdInHref = Number(
         href.slice(indexOfAttractionIdInHref + 1)
       );
-
       const date = document.querySelector("#date").value;
       const time = document.querySelector("input[name='time']:checked").id;
       const price = time === "daytime" ? 2000 : 2500;
+      if (date === "") {
+        document.querySelector(".hint__select-date").style.display =
+          "inline-block";
+        return;
+      }
       const reqObj = {
         date,
         time,
         price,
         userId: userId,
+        attractionId: indexOfAttractionIdInHref,
       };
       console.log(reqObj);
-      const isSuccessful = getData2("/booking", "POST", reqObj);
+      const bulidNewOrder = await getData2("/booking", "POST", reqObj);
+      if (bulidNewOrder["ok"])
+        window.location.href = "http://127.0.0.1:3000/booking";
     }
   });
 }
@@ -135,8 +148,8 @@ async function getData2(path, method = "GET", reqObj = {}) {
       "Content-Type": "application/json",
     };
   }
-  let prefixHttp = "http://35.162.233.114:3000/api";
-  // let prefixHttp = "http://127.0.0.1:3000/api";
+  // let prefixHttp = "http://35.162.233.114:3000/api";
+  let prefixHttp = "http://127.0.0.1:3000/api";
   try {
     let response;
     if (method === "GET") {
@@ -174,7 +187,6 @@ function renderNav(status) {
     btn.setAttribute("id", "login");
     btn.textContent = "登入/註冊";
   } else {
-    console.log("here");
     btn.setAttribute("id", "logOut");
     btn.textContent = "登出帳戶";
   }
@@ -295,4 +307,8 @@ function handleLogOut() {
     localStorage.clear();
     location.reload();
   });
+}
+
+function handlebookingPageLogout() {
+  window.location = "/";
 }

@@ -6,23 +6,26 @@
 
 {% block main %}
 <section class="section__cart container">
-    <h6 class="heading__sixth container__sm">
-      您好，Katlyn，待預定的行程如下：
-    </h6>
-  </div>
+  <h6 class="heading__sixth container__sm">
+    您好，<span id="user-name"></span>，待預定的行程如下：
+  </h6>
+  <p id="booking-not-found" class="hint__not-found container__sm">
+    目前沒有任何預定行程
+  </p>
   <div class="cart container__sm">
     <div class="cart__pic-box">
-      <img
-        src="../static/image/image-10.png"
-        alt=""
-        class="cart__pic-box__pic"
-      />
+      <img class="cart__pic-box__pic" id="attraction-img" />
     </div>
     <div class="cart__infos-box">
       <h5 class="heading__fifth cart__infos-box__heading">
-        台北一日遊：平安鐘
+        台北一日遊：<span id="attraction_name"></span>
       </h5>
-      <img src="../static/image/icon_delete.png" alt="icon icon__delete" class="icon icon__delete">
+      <img
+        src="../static/image/icon_delete.png"
+        alt="icon icon__delete"
+        class="icon icon__delete"
+        id="btn-delete"
+      />
       <div class="cart__infos-box__details">
         <p>
           日期：<span class="cart__infos-box__detail" id="booking-date"></span>
@@ -125,4 +128,5 @@
 </section>
 {% endblock %} {% block script %}
 <script src="{{url_for('static', filename='/js/myModules/user-login-state.js')}}"></script>
+<script src="{{url_for('static', filename='/js/booking.js')}}"></script>
 {% endblock %}
