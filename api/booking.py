@@ -1,11 +1,7 @@
 from flask import Blueprint, request, make_response, jsonify
 from module import CRUD_user as crud
 from module import load_data as load
-from dotenv import dotenv_values
-from module import web_token
 
-config = dotenv_values('.env')
-secret_key = config['secret_key']
 booking = Blueprint('booking', __name__)
 
 def get_uncomfirmed_order(user_id):
