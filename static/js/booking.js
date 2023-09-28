@@ -1,12 +1,7 @@
 initForBooking();
 
 async function initForBooking() {
-  let userInfo;
-  try {
-    userInfo = await getData2("/user/auth", "GET");
-  } catch {
-    window.location = "/";
-  }
+  const userInfo = await getData2("/user/auth", "GET");
   const hasOrder = await getData2("/booking", (method = "GET"));
   handleDeleteAttraction(userInfo.id);
 
@@ -38,9 +33,11 @@ function handleOrderNotFound() {
   const hint = document.querySelector("#booking-not-found");
   const cartBlock = document.querySelector(".cart");
   const sectionBookingForm = document.querySelector(".section__booking-form");
+  const footer = document.querySelector(".footer");
   hint.style.display = "block";
   cartBlock.style.display = "none";
   sectionBookingForm.style.display = "none";
+  footer.style.height = "-webkit-fill-available";
 }
 
 function handleDeleteAttraction(userId) {

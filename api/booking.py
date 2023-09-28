@@ -8,25 +8,6 @@ config = dotenv_values('.env')
 secret_key = config['secret_key']
 booking = Blueprint('booking', __name__)
 
-def check_login_state():
-    try:
-        request.headers.get("Authorization")
-        print(request.headers.get("Authorization"))
-        if 'Authorization' in request.headers:
-            auth_header = request.headers.get("Authorization", None)
-            token = auth_header.split(' ')[1]
-            print(token)
-            if(token is not None):
-                result = web_token.decode_token(token, secret_key)
-            data = {
-                'id': result['id'],
-                'name': result['name'],
-                'email': result['email']
-            }
-            return data
-    except:
-        return False
-
 def get_uncomfirmed_order(user_id):
     order_newest_id = get_newest_order_id(user_id)
     order = load.load_data('select * from trolley where id = %s and user_id = %s', (order_newest_id, user_id,))
@@ -76,7 +57,7 @@ def delete_old_order(user_id):
 
 @booking.route('/booking', methods=["GET", "POST", "DELETE"])
 def handle_booking():
-    isLogin = check_login_state()
+    isLogin = crud.check_login_state()
     if(isLogin == False):
         result = {
             'error': True,

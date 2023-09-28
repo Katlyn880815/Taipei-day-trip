@@ -1,4 +1,12 @@
 from module.load_data import *
+from module import web_token
+from dotenv import dotenv_values
+from flask import request
+
+config = dotenv_values('.env')
+secret_key = config['secret_key']
+
+
 
 def check_email_is_exist(email, password, name):
     result = load_data('select email from user where email = %s', (email,), 'one')
@@ -6,7 +14,7 @@ def check_email_is_exist(email, password, name):
     print(email, name, password)
 
     if(result == None):
-        insert_data('insert into user (name, email, password) values (%s, %s, %s)', (name, email, password))
+        cud_data('insert into user (name, email, password) values (%s, %s, %s)', (name, email, password))
         response_obj = {
             'ok': True
         }
@@ -28,3 +36,22 @@ def login(email, password):
             'message': '信箱或密碼錯誤'
         }
     return res
+
+def check_login_state():
+    try:
+        request.headers.get("Authorization")
+        print(request.headers.get("Authorization"))
+        if 'Authorization' in request.headers:
+            auth_header = request.headers.get("Authorization", None)
+            token = auth_header.split(' ')[1]
+            print('使用者token:',token)
+            if(token is not None):
+                result = web_token.decode_token(token, secret_key)
+            data = {
+                'id': result['id'],
+                'name': result['name'],
+                'email': result['email']
+            }
+            return data
+    except:
+        return False

@@ -65,10 +65,8 @@ async function handleNewBooking() {
         userId: userId,
         attractionId: indexOfAttractionIdInHref,
       };
-      console.log(reqObj);
       const bulidNewOrder = await getData2("/booking", "POST", reqObj);
-      if (bulidNewOrder["ok"])
-        window.location.href = "http://127.0.0.1:3000/booking";
+      if (bulidNewOrder["ok"]) window.location.href = "/booking";
     }
   });
 }
