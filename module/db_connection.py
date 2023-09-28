@@ -1,10 +1,5 @@
 import mysql.connector
 import mysql.connector.pooling
-import os
-from dotenv import load_dotenv, dotenv_values
-
-config = dotenv_values('.env')
-print(config['DATABASE_KEY'])
 
 db_config = {
     'user': 'root',
