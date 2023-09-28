@@ -42,7 +42,7 @@ function handleOrderNotFound() {
   hint.style.display = "block";
   cartBlock.style.display = "none";
   sectionBookingForm.style.display = "none";
-  footer.style.height = "71vh";
+  footer.style.height = "72.5vh";
 }
 
 function handleDeleteAttraction(userId) {
