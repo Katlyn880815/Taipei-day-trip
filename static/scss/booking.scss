@@ -11,23 +11,15 @@ main {
 
     .heading__sixth {
       min-width: 100rem;
-      margin-bottom: 3.5rem;
     }
 
     .hint__not-found {
       display: none;
+      margin-top: 3.5rem;
     }
 
     .cart {
-      display: flex;
-      align-items: center;
-      gap: 3rem;
-      display: none;
-
-      @include respond(tab-land) {
-        display: block;
-      }
-
+      opacity: 0;
       &__pic-box {
         border-radius: 0.5rem;
         overflow: hidden;
@@ -131,5 +123,15 @@ main {
         border-radius: 0.5rem;
       }
     }
+  }
+}
+
+.found-order {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+
+  @include respond(tab-port) {
+    display: block;
   }
 }

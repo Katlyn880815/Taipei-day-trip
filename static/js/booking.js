@@ -22,7 +22,8 @@ function renderOrder(orderInfo) {
   const img = document.querySelector("#attraction-img");
   const attractionName = document.querySelector("#attraction_name");
   const totalPrice = document.querySelector("#total-price");
-  cartBlock.style.display = "flex";
+  cartBlock.style.opacity = "1";
+  cartBlock.classList.add("found-order");
   formBlock.style.display = "block";
   ``;
   date.textContent = orderInfo["date"];

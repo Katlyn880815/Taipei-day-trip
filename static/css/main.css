@@ -600,21 +600,13 @@ main .section__cart {
 }
 main .section__cart .heading__sixth {
   min-width: 100rem;
-  margin-bottom: 3.5rem;
 }
 main .section__cart .hint__not-found {
   display: none;
+  margin-top: 3.5rem;
 }
 main .section__cart .cart {
-  display: flex;
-  align-items: center;
-  gap: 3rem;
-  display: none;
-}
-@media (max-width: 75em) {
-  main .section__cart .cart {
-    display: block;
-  }
+  opacity: 0;
 }
 main .section__cart .cart__pic-box {
   border-radius: 0.5rem;
@@ -704,6 +696,17 @@ main .section__booking-form .price .btn__booking {
   color: #fff;
   font-size: 1.9rem;
   border-radius: 0.5rem;
+}
+
+.found-order {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+@media (max-width: 56.25em) {
+  .found-order {
+    display: block;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */
