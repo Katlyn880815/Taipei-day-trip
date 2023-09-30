@@ -618,7 +618,7 @@ main .section__cart .cart__pic-box__pic {
   object-fit: cover;
   vertical-align: middle;
 }
-@media (max-width: 75em) {
+@media (max-width: 56.25em) {
   main .section__cart .cart__pic-box__pic {
     width: 100%;
   }
@@ -637,7 +637,7 @@ main .section__cart .cart__infos-box .icon__delete {
   top: 0;
   right: 0;
 }
-@media (max-width: 75em) {
+@media (max-width: 56.25em) {
   main .section__cart .cart__infos-box .icon__delete {
     top: 18rem;
   }

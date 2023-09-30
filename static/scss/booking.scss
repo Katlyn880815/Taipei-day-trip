@@ -29,7 +29,7 @@ main {
           width: 26.6rem;
           object-fit: cover;
           vertical-align: middle;
-          @include respond(tab-land) {
+          @include respond(tab-port) {
             width: 100%;
           }
         }
@@ -50,7 +50,7 @@ main {
           top: 0;
           right: 0;
 
-          @include respond(tab-land) {
+          @include respond(tab-port) {
             top: 18rem;
           }
         }
