@@ -62,7 +62,7 @@
       <label for="email-booking">
         連絡信箱：
         <input
-          id="email-bookig"
+          id="email-booking"
           name="email-booking"
           type="email"
           class="input_group"
@@ -86,48 +86,30 @@
   <form class="form__payment container">
     <div class="form__payment__infos container__sm">
       <h6 class="heading__sixth">信用卡付款資料</h6>
-      <label for="card-number">
+      <label for="card-number" class="tpfield-label">
         卡片號碼：
-        <input
-          id="card-number"
-          name="card-number"
-          type="text"
-          pattern="[0-9]*"
-          inputmode="numeric"
-          placeholder="**** **** **** ****"
-          class="input_group"
-        />
+        <div class="tpfield" id="tp-card-number"></div>
       </label>
-      <label for="exp-date">
+      <label for="exp-date" class="tpfield-label">
         過期時間：
-        <input
-          id="exp-date"
-          name="exp-date"
-          type="text"
-          pattern="[0-9]*"
-          placeholder="MM/YY"
-          class="input_group"
-        />
+        <div class="tpfield" id="tp-exp-date"></div>
       </label>
-      <label for="cvv">
+      <label for="cvv" class="tpfield-label">
         驗證密碼：
-        <input
-          id="cvv"
-          name="cvv"
-          placeholder="CVV"
-          pattern="[0-9]*"
-          class="input_group"
-          inputmode="numeric"
-        />
+        <div class="tpfield" id="tp-cvv"></div>
       </label>
     </div>
   </form>
   <div class="price">
     <p>總價：新台幣<span id="total-price"></span></p>
-    <button class="btn btn__booking">確認訂購並付款</button>
+    <button class="btn btn__booking btn__invalid" id="btn-booking" disabled>
+      確認訂購並付款
+    </button>
   </div>
 </section>
 {% endblock %} {% block script %}
+<script src="https://js.tappaysdk.com/sdk/tpdirect/v5.17.0"></script>
 <script src="{{url_for('static', filename='/js/myModules/user-login-state.js')}}"></script>
 <script src="{{url_for('static', filename='/js/booking.js')}}"></script>
+<script src="{{url_for('static', filename='/js/payment.js')}}"></script>
 {% endblock %}

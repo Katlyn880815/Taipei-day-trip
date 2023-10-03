@@ -140,12 +140,23 @@ a {
     color: green;
     padding: 1.5rem 0;
   }
+
+  &__invalid-info {
+    color: red !important;
+    padding: 1.5rem 0 0 1.5rem;
+    display: none;
+  }
 }
 
 .input_group {
   padding: 1rem;
   width: 20rem;
   border: 0.1rem solid $color-border-grey;
+  border-radius: 0.5rem;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .hint {

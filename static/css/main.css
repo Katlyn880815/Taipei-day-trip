@@ -124,11 +124,20 @@ a {
   color: green;
   padding: 1.5rem 0;
 }
+.hint__invalid-info {
+  color: red !important;
+  padding: 1.5rem 0;
+  display: none;
+}
 
 .input_group {
   padding: 1rem;
   width: 20rem;
   border: 0.1rem solid #e8e8e8;
+  border-radius: 0.5rem;
+}
+.input_group:focus {
+  outline: none;
 }
 
 .hint__select-date {
@@ -707,6 +716,27 @@ main .section__booking-form .price .btn__booking {
   .found-order {
     display: block;
   }
+}
+
+.tpfield-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tpfield {
+  display: inline-block;
+  height: 3.8rem;
+  width: 20rem;
+  border: 1px solid #e8e8e8;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.btn__invalid {
+  cursor: not-allowed;
+  background-color: #e8e8e8;
+  color: #666666;
 }
 
 /*# sourceMappingURL=main.css.map */

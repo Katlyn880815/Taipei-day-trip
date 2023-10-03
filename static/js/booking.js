@@ -1,15 +1,30 @@
 initForBooking();
+var userInfo;
+var orderInfo;
 
 async function initForBooking() {
-  const userInfo = await getData2("/user/auth", "GET");
+  const getUserInfo = await getData2("/user/auth", "GET");
   const hasOrder = await getData2("/booking", (method = "GET"));
-  handleDeleteAttraction(userInfo.id);
+  userInfo = getUserInfo;
+  orderInfo = hasOrder;
+  console.log(userInfo);
+  console.log(orderInfo);
+  handleDeleteAttraction(getUserInfo.id);
+  renderInputField(getUserInfo);
 
   if (hasOrder !== null) {
     renderOrder(hasOrder["data"]);
   } else {
     handleOrderNotFound();
   }
+}
+
+function renderInputField(userInfos) {
+  const nameField = document.querySelector("#name-booking");
+  const emailField = document.querySelector("#email-booking");
+
+  nameField.value = userInfos.name;
+  emailField.value = userInfos.email;
 }
 
 function renderOrder(orderInfo) {
