@@ -13,6 +13,11 @@ headers = {
     'x-api-key' : partner_key,
 }
 
+@orders.route('/orders/<number>', methods=['GET'])
+def handle_result_page(number):
+    get_order = load.load_data('select * from orders where order_number = %s', (number, ), 'one')
+    print(get_order)
+    return jsonify(get_order), 200
 
 @orders.route('/orders', methods=['POST'])
 def handle_payment():
@@ -100,7 +105,7 @@ def check_infos_validity(email, name, phone):
 
 def create_order_in_database(order_infos, order_number):
     try:
-        data = load.cud_data('Insert into orders (order_number, attraction_id, date, time, contact_email, contact_phone, contact_name) values (%s, %s, %s, %s, %s, %s, %s)', (order_number, order_infos['order']['trip']['attraction']['id'], order_infos['order']['trip']['date'], order_infos['order']['trip']['time'], order_infos['contact']['email'], order_infos['contact']['phone'], order_infos['contact']['name'],))
+        data = load.cud_data('Insert into orders (order_number, attraction_id, attraction_name, attraction_address, attraction_image, date, time, contact_email, contact_phone, contact_name) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', (order_number, order_infos['order']['trip']['attraction']['id'], order_infos['order']['trip']['attraction']['name'], order_infos['order']['trip']['attraction']['address'], order_infos['order']['trip']['attraction']['image'], order_infos['order']['trip']['date'], order_infos['order']['trip']['time'], order_infos['contact']['email'], order_infos['contact']['phone'], order_infos['contact']['name'],))
         return True
     except:
         return False

@@ -104,9 +104,7 @@ async function getData2(path, method = "GET", reqObj = {}) {
     } else {
       response = await fetch(prefixHttp + path, {
         method: method,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: headers,
         body: JSON.stringify(reqObj),
       });
     }

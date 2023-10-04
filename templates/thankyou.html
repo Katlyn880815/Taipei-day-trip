@@ -1,0 +1,88 @@
+{% extends "base.html" %} {% block style %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}" />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+/>
+{% endblock %}
+<title>{% block title %}台北一日遊-感謝訂購台北一日遊行程 {% endblock %}</title>
+
+{% block main %}
+<section class="section__order-info container">
+  <h6 class="heading__sixth">
+    感謝 <span id="contact-name"></span> 的訂購，這是您的預定行程詳細資訊：
+  </h6>
+  <div class="order container__sm">
+    <div class="order__pic-box">
+      <img id="order-attraction-img" class="order__pic-box__img" />
+    </div>
+    <div class="order__details">
+      <div class="order__details__attraction">
+        <h6 class="heading__sixth">預定景點資訊</h6>
+        <p class="order__details__attraction__item">
+          景點名稱：<span
+            class="order__details__attraction__item__content"
+            id="site-name"
+          ></span>
+        </p>
+        <p class="order__details__attraction__item">
+          預定日期：<span
+            class="order__details__attraction__item__content"
+            id="order-date"
+          ></span>
+        </p>
+        <p class="order__details__attraction__item">
+          預定時間：<span
+            class="order__details__attraction__item__content"
+            id="order-time"
+          ></span>
+        </p>
+      </div>
+      <div class="order__details__order">
+        <h6 class="heading__sixth">訂單詳細資訊</h6>
+        <p class="reminder cta">請記下此訂單編號，以利日後查詢。</p>
+        <p class="order__details__order__item">
+          訂單編號：<span
+            class="order__details__order__item__content"
+            id="order-number"
+          ></span>
+          <span
+            class="material-symbols-outlined icon__copy"
+            id="copyButton"
+            title="click to copy"
+          >
+            content_copy
+          </span>
+          <span class="copy-successful">
+            <span class="material-symbols-outlined icon__successful">
+              task_alt
+            </span>
+            <span>複製成功</span>
+          </span>
+        </p>
+        <p class="order__details__order__item">
+          付款狀態：<span
+            class="order__details__order__item__content"
+            id="payment-status"
+          ></span>
+        </p>
+        <p class="order__details__order__item">
+          聯絡人電話：<span
+            class="order__details__order__item__content"
+            id="contact-phone"
+          ></span>
+        </p>
+        <p class="order__details__order__item">
+          聯絡人信箱：<span
+            class="order__details__order__item__content"
+            id="contact-email"
+          ></span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %} {% block script %}
+<script src="{{url_for('static', filename='/js/myModules/user-login-state.js')}}"></script>
+<script src="{{url_for('static', filename='/js/thankyou.js')}}"></script>
+{% endblock %}

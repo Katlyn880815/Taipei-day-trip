@@ -94,6 +94,7 @@ async function switchBtnStatus(orderInfo) {
       const reqObj = generate_request_obj(prime, orderInfo);
       const result = await getData2("/orders", "POST", reqObj);
       console.log(result);
+      handlePaymentResult(result);
     });
   } else {
     btnCta.classList.add("btn__invalid");
@@ -188,34 +189,22 @@ function generate_request_obj(prime, orderInfo) {
     },
   };
   console.table(reqObj);
-  return obj;
+  return reqObj;
 }
 
-function handlePamentResult(result) {
+function handlePaymentResult(result) {
   let orderNumber;
-  let paymentStattus;
   let errorMsg;
   try {
     const data = result.data;
     orderNumber = data.number;
-    paymentStattus = data.payment.message;
+    window.location.href = `/thankyou?number=${orderNumber}`;
+    console.log(orderNumber);
   } catch {
     errorMsg = result.message;
     if (errorMsg === "使用者電子信箱或手機號碼填寫錯誤，或姓名未填寫") {
+      const hintText = document.querySelector(".hint__invalid-info");
+      hintText.style.display = "inline-block";
     }
-  } finally {
   }
 }
-
-// async function requestPayment() {
-//   const storedToken = localStorage.getItem("token");
-//   const payRequest = await fetch("/api/orders", {
-//     method: "POST",
-//     headers: {
-//       Authorization: "Bearer " + storedToken,
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(reqObj),
-//   });
-//   const payResult = await payRequest.json();
-// }

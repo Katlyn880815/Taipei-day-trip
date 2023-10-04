@@ -35,8 +35,10 @@ def login(email, password):
 
 def check_login_state():
     try:
-        request.headers.get("Authorization")
+        auth = request.headers.get("Authorization")
+        print(auth)
         if 'Authorization' in request.headers:
+            print('here 2')
             auth_header = request.headers.get("Authorization", None)
             token = auth_header.split(' ')[1]
             print('使用者token:',token)

@@ -126,7 +126,7 @@ a {
 }
 .hint__invalid-info {
   color: red !important;
-  padding: 1.5rem 0;
+  padding: 1.5rem 0 0 1.5rem;
   display: none;
 }
 
@@ -737,6 +737,88 @@ main .section__booking-form .price .btn__booking {
   cursor: not-allowed;
   background-color: #e8e8e8;
   color: #666666;
+}
+
+.section__order-info {
+  padding: 6rem 0;
+}
+.section__order-info .heading__sixth {
+  margin-bottom: 5rem;
+}
+.section__order-info .order {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+@media (max-width: 56.25em) {
+  .section__order-info .order {
+    display: block;
+  }
+}
+.section__order-info .order__pic-box {
+  width: 100%;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+@media (max-width: 56.25em) {
+  .section__order-info .order__pic-box {
+    margin-bottom: 4rem;
+  }
+}
+.section__order-info .order__pic-box__img {
+  width: 100%;
+  vertical-align: middle;
+}
+.section__order-info .order__details {
+  width: 100%;
+}
+.section__order-info .order__details__attraction .heading__sixth, .section__order-info .order__details__order .heading__sixth {
+  margin-bottom: 3rem;
+  color: #448899;
+}
+.section__order-info .order__details__attraction__item, .section__order-info .order__details__order__item {
+  color: #666666;
+}
+.section__order-info .order__details__attraction__item:not(:last-child), .section__order-info .order__details__order__item:not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+.section__order-info .order__details__attraction {
+  padding-bottom: 5rem;
+  position: relative;
+}
+.section__order-info .order__details__attraction::after {
+  content: "";
+  width: 100%;
+  position: absolute;
+  bottom: 2.5rem;
+  left: 0;
+  border-bottom: 0.1rem solid #e8e8e8;
+}
+.section__order-info .order__details .copy-successful {
+  display: none;
+  font-size: 1.4rem;
+}
+.section__order-info .order__details .icon {
+  margin-left: 0.3rem;
+}
+.section__order-info .order__details .icon__copy {
+  cursor: pointer;
+}
+.section__order-info .order__details .icon__successful {
+  color: #06d6a0;
+  font-size: 1.2rem;
+}
+
+.paid {
+  color: #06d6a0;
+}
+
+.cta {
+  color: #ef476f;
+}
+
+.reminder {
+  padding-bottom: 0.5rem;
 }
 
 /*# sourceMappingURL=main.css.map */
