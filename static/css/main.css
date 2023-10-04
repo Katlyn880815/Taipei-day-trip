@@ -41,6 +41,11 @@ a {
   margin: 0 auto;
 }
 
+.container__sm {
+  max-width: 98rem;
+  margin: 0 auto;
+}
+
 .heading {
   font-weight: 700;
 }
@@ -67,6 +72,9 @@ a {
 .heading__fifth {
   font-size: 1.6rem;
   line-height: 3.2rem;
+}
+.heading__sixth {
+  font-size: 1.9rem;
 }
 
 .btn {
@@ -115,6 +123,18 @@ a {
 .hint__success {
   color: green;
   padding: 1.5rem 0;
+}
+
+.input_group {
+  padding: 1rem;
+  width: 20rem;
+  border: 0.1rem solid #e8e8e8;
+}
+
+.hint__select-date {
+  color: red;
+  padding-left: 1rem;
+  display: none;
 }
 
 /* COLORS */
@@ -565,6 +585,128 @@ main {
 }
 .section__attraction-description .attraction-description-box .heading__forth {
   line-height: 2;
+}
+
+@media (max-width: 75em) {
+  main {
+    padding: 0 1rem;
+  }
+}
+main .section__cart {
+  line-height: normal;
+  padding: 4rem 0;
+  color: #666666;
+  border-bottom: 0.1rem solid #e8e8e8;
+}
+main .section__cart .heading__sixth {
+  min-width: 100rem;
+}
+main .section__cart .hint__not-found {
+  display: none;
+  margin-top: 3.5rem;
+}
+main .section__cart .cart {
+  opacity: 0;
+}
+main .section__cart .cart__pic-box {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  padding: 2.8rem 0;
+}
+main .section__cart .cart__pic-box__pic {
+  width: 26.6rem;
+  object-fit: cover;
+  vertical-align: middle;
+}
+@media (max-width: 56.25em) {
+  main .section__cart .cart__pic-box__pic {
+    width: 100%;
+  }
+}
+main .section__cart .cart__infos-box {
+  flex-grow: 1;
+  position: relative;
+}
+main .section__cart .cart__infos-box .heading__fifth {
+  color: #448899;
+  padding-bottom: 3rem;
+}
+main .section__cart .cart__infos-box .icon__delete {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+@media (max-width: 56.25em) {
+  main .section__cart .cart__infos-box .icon__delete {
+    top: 18rem;
+  }
+}
+main .section__cart .cart__infos-box__details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+main .section__cart .cart__infos-box__details p {
+  font-size: 1.6rem;
+}
+main .section__booking-form {
+  line-height: normal;
+  display: none;
+}
+main .section__booking-form .form__booking {
+  padding: 4rem 0;
+  color: #666666;
+  border-bottom: 0.1rem solid #e8e8e8;
+}
+main .section__booking-form .form__booking .heading__sixth {
+  padding-bottom: 1.5rem;
+}
+main .section__booking-form .form__booking__user-infos {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+main .section__booking-form .form__payment {
+  padding: 4rem 0;
+  color: #666666;
+  border-bottom: 0.1rem solid #e8e8e8;
+}
+main .section__booking-form .form__payment__infos {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+main .section__booking-form .form__payment__infos .heading__sixth {
+  padding-bottom: 1.5rem;
+}
+main .section__booking-form .form__payment__infos .reminding {
+  padding-top: 0.5rem;
+}
+main .section__booking-form .price {
+  padding: 4rem 0;
+  text-align: right;
+}
+main .section__booking-form .price p {
+  padding-bottom: 2rem;
+  color: #666666;
+}
+main .section__booking-form .price .btn__booking {
+  padding: 1rem 2rem;
+  color: #fff;
+  font-size: 1.9rem;
+  border-radius: 0.5rem;
+}
+
+.found-order {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+@media (max-width: 56.25em) {
+  .found-order {
+    display: block;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */

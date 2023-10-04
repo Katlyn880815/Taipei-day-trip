@@ -1,32 +1,93 @@
 initForLoginState();
 
+let loginState;
+let userId;
+const btnCta = document.querySelector("#btn-cta") ?? null;
+const userNameBlock = document.querySelector("#user-name") ?? null;
+const isBookingPage = document.querySelector(".section__cart") ?? null;
+
 async function initForLoginState() {
   const isLogin = await getData2("/user/auth", "GET");
   renderNav(isLogin);
   console.log(isLogin);
   if (isLogin === null) {
-    //登入點擊
+    loginState = false;
     const loginBtn = document.querySelector("#login");
-    const userLoginBlock = document.querySelector(".user-login");
+    const bookingBtn = document.querySelector("#booking-btn");
+    if (btnCta !== null) {
+      handleNewBooking();
+    } else if (isBookingPage !== null) {
+      handlebookingPageLogout();
+    }
+    loginState = false;
+    bookingBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      login();
+    });
     loginBtn.addEventListener("click", function () {
-      userLoginBlock.classList.add("show");
-      formInit();
-      handleSwitch();
-      const btnsLogin = document.querySelectorAll(".btn__login");
-      btnsLogin.forEach((btn) => {
-        btn.addEventListener("click", function (e) {
-          e.preventDefault();
-          checkTheInput(btn);
-        });
-      });
-      const closeLoginBlock = document.querySelector(".icon__close");
-      closeLoginBlock.addEventListener("click", function () {
-        userLoginBlock.classList.remove("show");
-      });
+      login();
     });
   } else {
+    loginState = true;
+    userId = isLogin.id;
+    if (btnCta !== null) {
+      handleNewBooking();
+    } else if (userNameBlock !== null) {
+      userNameBlock.textContent = isLogin["name"];
+    }
     handleLogOut();
   }
+}
+
+async function handleNewBooking() {
+  btnCta.addEventListener("click", async function (e) {
+    e.preventDefault();
+    if (loginState === false) {
+      login();
+    } else {
+      const href = window.location.href;
+      let indexOfAttractionIdInHref = href.lastIndexOf("/");
+      indexOfAttractionIdInHref = Number(
+        href.slice(indexOfAttractionIdInHref + 1)
+      );
+      const date = document.querySelector("#date").value;
+      const time = document.querySelector("input[name='time']:checked").id;
+      const price = time === "daytime" ? 2000 : 2500;
+      if (date === "") {
+        document.querySelector(".hint__select-date").style.display =
+          "inline-block";
+        return;
+      }
+      const reqObj = {
+        date,
+        time,
+        price,
+        userId: userId,
+        attractionId: indexOfAttractionIdInHref,
+      };
+      const bulidNewOrder = await getData2("/booking", "POST", reqObj);
+      if (bulidNewOrder["ok"]) window.location.href = "/booking";
+    }
+  });
+}
+
+function login() {
+  const userLoginBlock = document.querySelector(".user-login");
+  console.log(userLoginBlock);
+  userLoginBlock.classList.add("show");
+  formInit();
+  handleSwitch();
+  const btnsLogin = document.querySelectorAll(".btn__login");
+  btnsLogin.forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      checkTheInput(btn);
+    });
+  });
+  const closeLoginBlock = document.querySelector(".icon__close");
+  closeLoginBlock.addEventListener("click", function () {
+    userLoginBlock.classList.remove("show");
+  });
 }
 
 function formInit() {
@@ -110,6 +171,11 @@ async function getData2(path, method = "GET", reqObj = {}) {
   }
 }
 
+function handleBooking(loginState) {
+  if (loginState === null) {
+    userLoginBlock.classList.add("show");
+  }
+}
 //Rendering navigation
 function renderNav(status) {
   const headerNavBar = document.querySelector("#header-nav-bar");
@@ -119,7 +185,6 @@ function renderNav(status) {
     btn.setAttribute("id", "login");
     btn.textContent = "登入/註冊";
   } else {
-    console.log("here");
     btn.setAttribute("id", "logOut");
     btn.textContent = "登出帳戶";
   }
@@ -240,4 +305,8 @@ function handleLogOut() {
     localStorage.clear();
     location.reload();
   });
+}
+
+function handlebookingPageLogout() {
+  window.location = "/";
 }

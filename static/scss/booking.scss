@@ -1,0 +1,137 @@
+main {
+  @include respond(tab-land) {
+    padding: 0 1rem;
+  }
+
+  .section__cart {
+    line-height: normal;
+    padding: 4rem 0;
+    color: $color-dark-grey;
+    border-bottom: 0.1rem solid $color-border-grey;
+
+    .heading__sixth {
+      min-width: 100rem;
+    }
+
+    .hint__not-found {
+      display: none;
+      margin-top: 3.5rem;
+    }
+
+    .cart {
+      opacity: 0;
+      &__pic-box {
+        border-radius: 0.5rem;
+        overflow: hidden;
+        padding: 2.8rem 0;
+
+        &__pic {
+          width: 26.6rem;
+          object-fit: cover;
+          vertical-align: middle;
+          @include respond(tab-port) {
+            width: 100%;
+          }
+        }
+      }
+
+      &__infos-box {
+        flex-grow: 1;
+        position: relative;
+
+        .heading__fifth {
+          color: $color-primay;
+          padding-bottom: 3rem;
+        }
+
+        .icon__delete {
+          cursor: pointer;
+          position: absolute;
+          top: 0;
+          right: 0;
+
+          @include respond(tab-port) {
+            top: 18rem;
+          }
+        }
+
+        &__details {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+
+          p {
+            font-size: 1.6rem;
+          }
+        }
+      }
+    }
+  }
+
+  .section__booking-form {
+    line-height: normal;
+    display: none;
+    .form__booking {
+      padding: 4rem 0;
+      color: $color-dark-grey;
+      border-bottom: 0.1rem solid $color-border-grey;
+
+      .heading__sixth {
+        padding-bottom: 1.5rem;
+      }
+
+      &__user-infos {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+    }
+
+    .form__payment {
+      padding: 4rem 0;
+      color: $color-dark-grey;
+      border-bottom: 0.1rem solid $color-border-grey;
+
+      &__infos {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        .heading__sixth {
+          padding-bottom: 1.5rem;
+        }
+
+        .reminding {
+          padding-top: 0.5rem;
+        }
+      }
+    }
+
+    .price {
+      padding: 4rem 0;
+      text-align: right;
+
+      p {
+        padding-bottom: 2rem;
+        color: $color-dark-grey;
+      }
+
+      .btn__booking {
+        padding: 1rem 2rem;
+        color: $color-pure-white;
+        font-size: 1.9rem;
+        border-radius: 0.5rem;
+      }
+    }
+  }
+}
+
+.found-order {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+
+  @include respond(tab-port) {
+    display: block;
+  }
+}

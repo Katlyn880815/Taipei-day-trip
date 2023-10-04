@@ -1,19 +1,9 @@
 from flask import Blueprint, request, make_response, jsonify
 from module import CRUD_user as crud
+from module import web_token
 import json, jwt, datetime, re
 
 user = Blueprint('user', __name__)
-
-def generate_jwt(payload, secret_key):
-    expiration_time = datetime.datetime.utcnow()+ datetime.timedelta(days=7)
-    payload['exp'] = expiration_time
-    token = jwt.encode(payload, secret_key, algorithm="HS256")
-    return token
-
-def decode_token(token, secret_key):
-    data = jwt.decode(token, secret_key, algorithms="HS256")
-    print(data)
-    return data
 
 def check_email_validity(email):
     email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -41,21 +31,10 @@ def handle_register():
 
 @user.route('/user/auth', methods=['GET', 'PUT'])
 def check_login():
-    secret_key = 'katlyn123'
+    secret_key = 'katlyn1234'
     if(request.method == 'GET'):
-        print(request.headers.get("Authorization"))
         if 'Authorization' in request.headers:
-            auth_header = request.headers.get("Authorization", None)
-            token = auth_header.split(' ')[1]
-            print(token)
-            if(token is not None):
-                result = decode_token(token, secret_key)
-            print(result)
-            data = {
-                'id': result['id'],
-                'name': result['name'],
-                'email': result['email']
-            }
+            data = crud.check_login_state()
             return jsonify(data)
         else:
             data = None
@@ -70,7 +49,7 @@ def check_login():
                 'name': result[0]['name'],
                 'email': result[0]['email'],
             }
-            token = generate_jwt(payload, secret_key)
+            token = web_token.generate_jwt(payload, secret_key)
             response = {
                 'ok': True,
                 'token': token

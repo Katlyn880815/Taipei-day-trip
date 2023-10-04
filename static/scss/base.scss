@@ -46,6 +46,11 @@ a {
   margin: 0 auto;
 }
 
+.container__sm {
+  max-width: 98rem;
+  margin: 0 auto;
+}
+
 .heading {
   font-weight: 700;
   &__primary {
@@ -77,6 +82,10 @@ a {
   &__fifth {
     font-size: 1.6rem;
     line-height: 3.2rem;
+  }
+
+  &__sixth {
+    font-size: 1.9rem;
   }
 }
 
@@ -130,5 +139,19 @@ a {
   &__success {
     color: green;
     padding: 1.5rem 0;
+  }
+}
+
+.input_group {
+  padding: 1rem;
+  width: 20rem;
+  border: 0.1rem solid $color-border-grey;
+}
+
+.hint {
+  &__select-date {
+    color: red;
+    padding-left: 1rem;
+    display: none;
   }
 }
