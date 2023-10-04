@@ -147,7 +147,7 @@ async function getData2(path, method = "GET", reqObj = {}) {
     };
   }
   // let prefixHttp = "http://35.162.233.114:3000/api";
-  let prefixHttp = "http://127.0.0.1:3000/api";
+  let prefixHttp = "/api";
   try {
     let response;
     if (method === "GET") {
