@@ -1,5 +1,6 @@
 .section__order-info {
   padding: 6rem 0;
+  min-height: 90vh;
 
   .heading__sixth {
     margin-bottom: 5rem;
@@ -10,7 +11,7 @@
   .order {
     display: flex;
     align-items: center;
-    gap: 3rem;
+    gap: 5rem;
 
     @include respond(tab-port) {
       display: block;
