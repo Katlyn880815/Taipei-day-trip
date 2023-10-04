@@ -5,8 +5,9 @@ from module import load_data as load
 import os
 from dotenv import load_dotenv, dotenv_values
 
-config = dotenv_values('.env')
-partner_key = config['partner_key']
+load_dotenv()
+partner_key = os.getenv('partner_key')
+
 
 orders = Blueprint('orders', __name__)
 test_url = 'https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime'
