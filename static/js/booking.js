@@ -1,14 +1,16 @@
-initForBooking();
-var userInfo;
-var orderInfo;
+document.addEventListener("DOMContentLoaded", function () {
+  initForBooking();
+  isLoaded = true;
+});
+let userInfo;
+let orderInfo;
+let isLoaded = false;
 
 async function initForBooking() {
   const getUserInfo = await getData2("/user/auth", "GET");
   const hasOrder = await getData2("/booking", (method = "GET"));
   userInfo = getUserInfo;
   orderInfo = hasOrder;
-  console.log(userInfo);
-  console.log(orderInfo);
   handleDeleteAttraction(getUserInfo.id);
   renderInputField(getUserInfo);
 
@@ -40,7 +42,6 @@ function renderOrder(orderInfo) {
   cartBlock.style.opacity = "1";
   cartBlock.classList.add("found-order");
   formBlock.style.display = "block";
-  ``;
   date.textContent = orderInfo["date"];
   time.textContent = orderInfo["time"] === "daytime" ? "上午" : "下午";
   spending.textContent = orderInfo["price"];
@@ -92,8 +93,8 @@ async function getData2(path, method = "GET", reqObj = {}) {
       "Content-Type": "application/json",
     };
   }
-  let prefixHttp = "http://35.162.233.114:3000/api";
-  // let prefixHttp = "http://127.0.0.1:3000/api";
+  // let prefixHttp = "http://35.162.233.114:3000/api";
+  let prefixHttp = "http://127.0.0.1:3000/api";
   try {
     let response;
     if (method === "GET") {

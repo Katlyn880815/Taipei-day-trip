@@ -36,7 +36,6 @@ def login(email, password):
 def check_login_state():
     try:
         request.headers.get("Authorization")
-        print(request.headers.get("Authorization"))
         if 'Authorization' in request.headers:
             auth_header = request.headers.get("Authorization", None)
             token = auth_header.split(' ')[1]
@@ -49,5 +48,7 @@ def check_login_state():
                 'email': result['email']
             }
             return data
+        else:
+            return False
     except:
         return False

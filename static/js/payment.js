@@ -1,3 +1,8 @@
+let inputFieldsStatus = false;
+let paymentStatus = false;
+let prime;
+eventForCheckInputs();
+
 TPDirect.setupSDK(
   137039,
   "app_5TDQeua2rQsVcKLj0oY0YyVDDrIBBpgZctYIOnvHiX9ADRibl1To9r4eWtKk",
@@ -37,11 +42,6 @@ TPDirect.card.setup({
   },
 });
 
-let inputFieldsStatus = false;
-let paymentStatus = false;
-
-eventForCheckInputs();
-
 function eventForCheckInputs() {
   const inputsContainer = document.querySelector(".form__booking__user-infos");
   const inputs = inputsContainer.querySelectorAll("input");
@@ -51,7 +51,9 @@ function eventForCheckInputs() {
       if (status) {
         console.log("all done");
         inputFieldsStatus = true;
-        if (paymentStatus && inputFieldsStatus) switchBtnStatus();
+        if (paymentStatus && inputFieldsStatus) {
+          switchBtnStatus(orderInfo.data);
+        }
       } else {
         inputFieldsStatus = false;
         switchBtnStatus();
@@ -75,40 +77,24 @@ TPDirect.card.onUpdate(function (update) {
   if (update.canGetPrime) {
     paymentStatus = true;
     TPDirect.card.getPrime(function (result) {
-      if (paymentStatus && inputFieldsStatus) switchBtnStatus();
-      //卡片前六碼
-      let bincode = result.card.bincode;
-      //卡片後四碼
-      let lastfour = result.card.lastfour;
-      //發卡銀行
-      let issuer = result.card.issuer;
-      //發卡銀行中文名稱
-      let issuerZh = result.card.issuer_zh_tw;
-      //發卡銀行代碼
-      let bankId = result.card.bank_id;
-      //卡片類別
-      let funding = result.card.funding;
-      //卡片種類
-      let type = result.card.type;
-      //卡片等級
-      let level = result.card.level;
-      //發卡國家
-      let country = result.card.country;
-      //發卡行國家碼
-      let countrycode = result.card.countrycode;
-      //交易者ip位置
-      let clientIp = result.clientip;
-      //信用卡識別碼
-      let cardIdentifier = result.card_identifier;
+      if (paymentStatus && inputFieldsStatus) {
+        prime = result.card.prime;
+        switchBtnStatus(orderInfo.data);
+      }
     });
   }
 });
 
-function switchBtnStatus() {
+async function switchBtnStatus(orderInfo) {
   const btnCta = document.querySelector("#btn-booking");
   if (inputFieldsStatus && paymentStatus) {
     btnCta.classList.remove("btn__invalid");
     btnCta.disabled = false;
+    btnCta.addEventListener("click", async function () {
+      const reqObj = generate_request_obj(prime, orderInfo);
+      const result = await getData2("/orders", "POST", reqObj);
+      console.log(result);
+    });
   } else {
     btnCta.classList.add("btn__invalid");
     btnCta.disabled = true;
@@ -135,16 +121,16 @@ function getPrimeToken(btn, result) {
 function getUserInfos() {
   const userName = document.querySelector("#name-booking").value || null;
   const userEmail = document.querySelector("#email-booking").value || null;
-  const userPhone = document.querySelector("#phone-booking").value || null;
+  let userPhone = document.querySelector("#phone-booking").value || null;
   const isPassed = checkUserInfos(userName, userEmail, userPhone);
   let result;
   if (isPassed) {
-    let interNum = convertInternationalPhoneNum(userPhone);
+    userPhone = convertInternationalPhoneNum(userPhone);
     result = {
       ok: true,
       userName,
       userEmail,
-      userPhone: interNum,
+      userPhone,
     };
     console.table(result);
     return result;
@@ -178,27 +164,58 @@ function convertInternationalPhoneNum(originNum) {
   return interNum;
 }
 
-function requestPayment(prime, userName, userEmail, userPhone) {
+function generate_request_obj(prime, orderInfo) {
+  const userInfos = getUserInfos();
   const reqObj = {
     prime,
     order: {
-      price: 2000,
+      price: orderInfo.price,
       trip: {
-        date: "",
-        time: "",
+        attraction: {
+          id: orderInfo.attraction.id,
+          name: orderInfo.attraction.name,
+          address: orderInfo.attraction.address,
+          image: orderInfo.attraction.image,
+        },
+        date: orderInfo.date,
+        time: orderInfo.time,
       },
     },
     contact: {
-      name: userName,
-      email: userEmail,
-      phone: userPhone,
+      name: userInfos.userName,
+      email: userInfos.userEmail,
+      phone: userInfos.userPhone,
     },
   };
-  fetch("/api/orders", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(),
-  });
+  console.table(reqObj);
+  return obj;
 }
+
+function handlePamentResult(result) {
+  let orderNumber;
+  let paymentStattus;
+  let errorMsg;
+  try {
+    const data = result.data;
+    orderNumber = data.number;
+    paymentStattus = data.payment.message;
+  } catch {
+    errorMsg = result.message;
+    if (errorMsg === "使用者電子信箱或手機號碼填寫錯誤，或姓名未填寫") {
+    }
+  } finally {
+  }
+}
+
+// async function requestPayment() {
+//   const storedToken = localStorage.getItem("token");
+//   const payRequest = await fetch("/api/orders", {
+//     method: "POST",
+//     headers: {
+//       Authorization: "Bearer " + storedToken,
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(reqObj),
+//   });
+//   const payResult = await payRequest.json();
+// }
