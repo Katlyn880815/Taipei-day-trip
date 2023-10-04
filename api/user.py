@@ -7,6 +7,7 @@ from dotenv import load_dotenv, dotenv_values
 
 user = Blueprint('user', __name__)
 config = dotenv_values('.env')
+print(config)
 secret_key = config['secret_key']
 
 def check_email_validity(email):
