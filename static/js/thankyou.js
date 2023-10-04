@@ -16,6 +16,8 @@ function renderOrderDetail(data) {
   contactName.textContent = data.contact_name;
   const siteName = document.querySelector("#site-name");
   siteName.textContent = data.attraction_name;
+  const siteAddress = document.querySelector("#site-address");
+  siteAddress.textContent = data.attraction_address;
   const orderDate = document.querySelector("#order-date");
   orderDate.textContent = data.date;
   const orderTime = document.querySelector("#order-time");

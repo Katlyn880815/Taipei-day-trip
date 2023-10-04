@@ -47,6 +47,7 @@ function eventForCheckInputs() {
   const inputs = inputsContainer.querySelectorAll("input");
   inputs.forEach((i) => {
     i.addEventListener("input", function () {
+      console.log("輸入中");
       let status = checkUserInfos();
       if (status) {
         console.log("all done");

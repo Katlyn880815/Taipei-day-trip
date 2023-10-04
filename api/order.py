@@ -2,10 +2,13 @@ from flask import Blueprint, request, make_response, jsonify
 import requests, json, time, random, re
 from module import CRUD_user as crud
 from module import load_data as load
+import os
+from dotenv import load_dotenv, dotenv_values
+
+config = dotenv_values('.env')
+partner_key = config['partner_key']
 
 orders = Blueprint('orders', __name__)
-partner_key = 'partner_CV79MTYhJKhO3oin15R5gmOAr9O01u3RHHpDupgHnKLIITmBT3Wl3M3l'
-merchant_id = 'merchantA'
 test_url = 'https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime'
 
 headers = {
@@ -41,6 +44,7 @@ def handle_payment():
         if(payment_status is not False):
             if(payment_status == 0):
                 switch_payment_status_to_paid(order_number)
+                crud.cud_data('delete from trolley where user_id = %s', (user_is_login['id'], ))
             data = {
                 'data': {
                     'number': order_number,
