@@ -54,6 +54,7 @@ def delete_old_order(user_id):
 @booking.route('/booking', methods=["GET", "POST", "DELETE"])
 def handle_booking():
     isLogin = crud.check_login_state()
+    print(isLogin)
     if(isLogin == False):
         result = {
             'error': True,
