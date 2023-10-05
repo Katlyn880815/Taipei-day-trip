@@ -1,9 +1,14 @@
 from flask import Blueprint, request, make_response, jsonify
 from module import CRUD_user as crud
 from module import web_token
-import json, jwt, datetime, re
+import json, re
+import os
+from dotenv import load_dotenv, dotenv_values
 
+load_dotenv()
+secret_key = os.getenv('secret_key')
 user = Blueprint('user', __name__)
+
 
 def check_email_validity(email):
     email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -31,7 +36,6 @@ def handle_register():
 
 @user.route('/user/auth', methods=['GET', 'PUT'])
 def check_login():
-    secret_key = 'katlyn1234'
     if(request.method == 'GET'):
         if 'Authorization' in request.headers:
             data = crud.check_login_state()

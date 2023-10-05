@@ -1,15 +1,32 @@
-initForBooking();
+document.addEventListener("DOMContentLoaded", function () {
+  initForBooking();
+  isLoaded = true;
+});
+let userInfo;
+let orderInfo;
+let isLoaded = false;
 
 async function initForBooking() {
-  const userInfo = await getData2("/user/auth", "GET");
+  const getUserInfo = await getData2("/user/auth", "GET");
   const hasOrder = await getData2("/booking", (method = "GET"));
-  handleDeleteAttraction(userInfo.id);
+  userInfo = getUserInfo;
+  orderInfo = hasOrder;
+  handleDeleteAttraction(getUserInfo.id);
+  renderInputField(getUserInfo);
 
   if (hasOrder !== null) {
     renderOrder(hasOrder["data"]);
   } else {
     handleOrderNotFound();
   }
+}
+
+function renderInputField(userInfos) {
+  const nameField = document.querySelector("#name-booking");
+  const emailField = document.querySelector("#email-booking");
+
+  nameField.value = userInfos.name;
+  emailField.value = userInfos.email;
 }
 
 function renderOrder(orderInfo) {
@@ -25,7 +42,6 @@ function renderOrder(orderInfo) {
   cartBlock.style.opacity = "1";
   cartBlock.classList.add("found-order");
   formBlock.style.display = "block";
-  ``;
   date.textContent = orderInfo["date"];
   time.textContent = orderInfo["time"] === "daytime" ? "上午" : "下午";
   spending.textContent = orderInfo["price"];
@@ -77,7 +93,7 @@ async function getData2(path, method = "GET", reqObj = {}) {
       "Content-Type": "application/json",
     };
   }
-  let prefixHttp = "http://35.162.233.114:3000/api";
+  let prefixHttp = "/api";
   // let prefixHttp = "http://127.0.0.1:3000/api";
   try {
     let response;
@@ -88,9 +104,7 @@ async function getData2(path, method = "GET", reqObj = {}) {
     } else {
       response = await fetch(prefixHttp + path, {
         method: method,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: headers,
         body: JSON.stringify(reqObj),
       });
     }
