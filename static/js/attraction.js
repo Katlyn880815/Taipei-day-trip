@@ -62,7 +62,7 @@ btnsCarousel.forEach((btn) => {
 
 //fetch
 async function getData(path) {
-  let prefix = "http://35.162.233.114:3000/api";
+  let prefix = "/api";
   if (!isLoading) {
     isLoading = true;
     try {

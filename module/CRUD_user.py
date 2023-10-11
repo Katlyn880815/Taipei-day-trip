@@ -4,15 +4,16 @@ from flask import request
 
 def check_email_is_exist(email, password, name):
     result = load_data('select email from user where email = %s', (email,), 'one')
-    print(result)
-    print(email, name, password)
+    print('確認註冊電子郵件是否已存在於資料庫：', result)
 
     if(result == None):
+        print('無人使用過，電子郵件可以被註冊')
         cud_data('insert into user (name, email, password) values (%s, %s, %s)', (name, email, password))
         response_obj = {
             'ok': True
         }
     else:
+        print('電子郵件已經被使用過，無法註冊')
         response_obj = {
             'error': True,
             'message': '此信箱已被註冊過'
@@ -21,7 +22,7 @@ def check_email_is_exist(email, password, name):
 
 def login(email, password):
     result = load_data('select * from user where email = %s and password = %s', (email, password,))
-    print(result)
+    print('使用者登入資訊：', result)
     if(result != []):
         res = result
     else:
@@ -34,15 +35,14 @@ def login(email, password):
 def check_login_state():
     try:
         auth = request.headers.get("Authorization")
-        print(auth)
         if 'Authorization' in request.headers:
-            print('here 2')
             auth_header = request.headers.get("Authorization", None)
             token = auth_header.split(' ')[1]
             print('使用者token:',token)
             if(token is not None):
                 result = web_token.decode_token(token)
                 print(result)
+                print('使用者token解析後資訊：', result)
             data = {
                 'id': result['id'],
                 'name': result['name'],

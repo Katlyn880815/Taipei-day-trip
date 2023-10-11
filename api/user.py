@@ -1,9 +1,9 @@
-from flask import Blueprint, request, make_response, jsonify
+from flask import Blueprint, request, jsonify
 from module import CRUD_user as crud
 from module import web_token
 import json, re
 import os
-from dotenv import load_dotenv, dotenv_values
+from dotenv import load_dotenv
 
 load_dotenv()
 secret_key = os.getenv('secret_key')

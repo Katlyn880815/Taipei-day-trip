@@ -9,7 +9,7 @@ const isBookingPage = document.querySelector(".section__cart") ?? null;
 async function initForLoginState() {
   const isLogin = await getData2("/user/auth", "GET");
   renderNav(isLogin);
-  console.log(isLogin);
+  console.log("使用者登入狀態：", isLogin);
   if (isLogin === null) {
     loginState = false;
     const loginBtn = document.querySelector("#login");
@@ -135,6 +135,7 @@ function handleSwitch() {
 
 async function getData2(path, method = "GET", reqObj = {}) {
   const storedToken = localStorage.getItem("token");
+  let prefixHttp = "/api";
   let headers;
   if (storedToken) {
     headers = {
@@ -146,8 +147,6 @@ async function getData2(path, method = "GET", reqObj = {}) {
       "Content-Type": "application/json",
     };
   }
-  // let prefixHttp = "http://35.162.233.114:3000/api";
-  let prefixHttp = "/api";
   try {
     let response;
     if (method === "GET") {
@@ -166,7 +165,6 @@ async function getData2(path, method = "GET", reqObj = {}) {
     return jsonData;
   } catch {
     console.log("Loading fail");
-    throw error;
   }
 }
 
@@ -260,9 +258,7 @@ function isUserInputValid(inputPassword, inputEmail, inputUserName, form) {
       return "資料欄位不可為空";
     }
   }
-  //如果資料為空
   if (inputPassword === "" || inputEmail === "") {
-    console.log("here");
     return "資料欄位不可為空";
   } else if (!email_regex.test(inputEmail)) {
     return "電子郵件格式錯誤";
