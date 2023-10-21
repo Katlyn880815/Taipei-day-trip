@@ -113,7 +113,7 @@ function putIntoAttractionList(attractionName, mrt, category, imgUrl, id) {
   let aElement = document.createElement("a");
   aElement.textContent = attractionName;
   aElement.classList.add("attractions__item__top-box__heading__link");
-  aElement.setAttribute("href", `/attraction/${id}`);
+  aElement.setAttribute("href", `http://35.162.233.114:3000/attraction/${id}`);
   h3Element.className = "heading__tertiary attractions__item__top-box__heading";
   h3Element.appendChild(aElement);
 
@@ -198,7 +198,7 @@ async function fetchByKeyword(path, keyword) {
 }
 
 async function getData(path) {
-  let prefixHttp = "/api";
+  let prefixHttp = "http://35.162.233.114:3000/api";
   // let prefixHttp = "http://127.0.0.1:3000/api";
   console.log(isLoading);
   if (isLoading === false) {
