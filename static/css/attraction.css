@@ -10,6 +10,7 @@ main {
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
   border-bottom: 0.1rem solid #e8e8e8;
+  position: relative;
 }
 @media (max-width: 75em) {
   .section__attraction-details {
@@ -44,16 +45,21 @@ main {
   }
 }
 .section__attraction-details .attraction-img-box .btn__carousel__prev, .section__attraction-details .attraction-img-box .btn__carousel__next {
+  width: 3.6rem;
+  height: 3.6rem;
   position: absolute;
   top: 50%;
   z-index: 2;
-  width: 3.6rem;
-  height: 3.6rem;
+  padding: 0;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(255, 255, 255, 0.65);
 }
-.section__attraction-details .attraction-img-box .btn__carousel__prev:hover, .section__attraction-details .attraction-img-box .btn__carousel__next:hover {
-  color: #000;
+.section__attraction-details .attraction-img-box .btn__carousel__prev > img, .section__attraction-details .attraction-img-box .btn__carousel__next > img {
+  opacity: 0.75;
+  transition: all 0.2s;
+}
+.section__attraction-details .attraction-img-box .btn__carousel__prev:hover > img, .section__attraction-details .attraction-img-box .btn__carousel__next:hover > img {
+  opacity: 1;
 }
 .section__attraction-details .attraction-img-box .btn__carousel__prev {
   left: 1rem;
@@ -81,6 +87,37 @@ main {
      object-fit: cover;
   -o-object-position: center;
      object-position: center;
+}
+.section__attraction-details .attraction-img-box .indicator-bar {
+  position: absolute;
+  bottom: 1.3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1.2rem;
+  z-index: 1000;
+}
+.section__attraction-details .attraction-img-box .indicator-bar__indicator {
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem;
+  background-color: rgba(255, 255, 255, 0.65);
+  border-radius: 50%;
+  position: relative;
+}
+.section__attraction-details .attraction-img-box .indicator-bar__indicator::after {
+  content: "";
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.section__attraction-details .attraction-img-box .indicator-bar__indicator[data-indicator]::after {
+  background-color: #000;
+  z-index: 1;
 }
 .section__attraction-details .attraction-booking-box {
   color: #666666;
@@ -117,9 +154,27 @@ main {
   font-family: Noto Sans TC, sans-serif;
   border: none;
   border-radius: 0.2rem;
+  cursor: pointer;
+}
+.section__attraction-details .attraction-booking-box__form-booking .input__date::-webkit-calendar-picker-indicator {
+  opacity: 1;
+  display: block;
+  background: url(../image/icon_calendar.png) no-repeat;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-width: thin;
+}
+.section__attraction-details .attraction-booking-box__form-booking .input__date:focus {
+  outline: none;
 }
 .section__attraction-details .attraction-booking-box__form-booking__description {
   line-height: 2.4rem;
+  font-weight: 500;
+}
+@media (max-width: 37.5em) {
+  .section__attraction-details .attraction-booking-box__form-booking__description {
+    font-weight: 400;
+  }
 }
 .section__attraction-details .attraction-booking-box__form-booking__select-time {
   display: flex;
@@ -135,7 +190,7 @@ main {
   border: 0.2rem solid #fff;
 }
 .section__attraction-details .attraction-booking-box__form-booking__select-time .btn__radio:checked {
-  background-color: #448899;
+  background-color: #000;
 }
 .section__attraction-details .attraction-booking-box__form-booking .btn__ctn {
   color: #fff;
@@ -152,6 +207,7 @@ main {
 .section__attraction-description {
   padding: 5rem 1rem;
   color: #666666;
+  letter-spacing: 0.2rem;
   font-weight: 400;
   line-height: 2.4rem;
   display: flex;

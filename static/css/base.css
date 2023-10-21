@@ -26,6 +26,7 @@ body {
   -ms-overflow-style: none;
   overflow: auto;
   height: 100vh;
+  position: relative;
 }
 body::-webkit-scrollbar {
   display: none;
@@ -40,6 +41,11 @@ a {
   margin: 0 auto;
 }
 
+.container__sm {
+  max-width: 98rem;
+  margin: 0 auto;
+}
+
 .heading {
   font-weight: 700;
 }
@@ -48,7 +54,7 @@ a {
   line-height: 3.4rem;
 }
 .heading__primary a {
-  color: #448899;
+  color: #000;
 }
 .heading__secondary {
   font-size: 2.8rem;
@@ -61,16 +67,81 @@ a {
   font-weight: 700;
 }
 .heading__forth {
-  font-size: 1.6rem;
-  line-height: 2.4rem;
+  font-size: 2.4rem;
 }
 .heading__fifth {
   font-size: 1.6rem;
+  line-height: 3.2rem;
+}
+.heading__sixth {
+  font-size: 1.9rem;
 }
 
 .btn {
-  background-color: #448899;
+  background-color: #000;
   border: none;
   border-radius: 0 0.5rem 0.5rem 0;
   cursor: pointer;
+}
+
+.header {
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header.container {
+  padding: 1rem;
+}
+.header__nav__item {
+  color: #666666;
+  padding: 1rem;
+  cursor: pointer;
+}
+.header__nav__item:hover {
+  color: #000;
+}
+
+.footer {
+  background-color: #666666;
+  text-align: center;
+}
+.footer .copyright {
+  color: #fff;
+  font-weight: 700;
+  padding: 4rem 0;
+}
+
+.hint {
+  font-size: 1.6rem;
+  text-align: center;
+}
+.hint__error {
+  color: red;
+  padding: 1.5rem 0;
+}
+.hint__success {
+  color: green;
+  padding: 1.5rem 0;
+}
+.hint__invalid-info {
+  color: red !important;
+  padding: 1.5rem 0 0 1.5rem;
+  display: none;
+}
+
+.input_group {
+  padding: 1rem;
+  width: 20rem;
+  border: 0.1rem solid #e8e8e8;
+  border-radius: 0.5rem;
+}
+.input_group:focus {
+  outline: none;
+}
+
+.hint__select-date {
+  color: red;
+  padding-left: 1rem;
+  display: none;
 }/*# sourceMappingURL=base.css.map */
